@@ -1,0 +1,173 @@
+<template>
+    <div class="v-register-field">
+        <div class="v-register-field_wrapper">
+            <div class="v-register-field_wrapper_content">
+                <div class="v-register-field_wrapper_content_title">
+                    <p>Register</p>
+                </div>
+                <div class="v-register-field_wrapper_content_description">
+                    <p>For successful register, please fill in the below form then click ‘Register’.</p>
+                </div>
+                <div class="v-register-field_wrapper_content_inputs">
+                    <div class="v-register-field_wrapper_content_inputs_first-part">
+                        <div class="v-register-field_wrapper_content_inputs_first-part_first-name">
+                            <p>First name</p>
+                            <input type="text" placeholder="Tolya" v-model="firstName">
+                        </div>
+                        <div class="v-register-field_wrapper_content_inputs_first-part_email">
+                            <p>Email</p>
+                            <input type="text" placeholder="ders123@test.com" v-model="email">
+                        </div>
+                        <div class="v-register-field_wrapper_content_inputs_first-part_gender">
+                            <p>Gender</p>
+                            <input type="text" placeholder="Transnigger" v-model="gender">
+                        </div>
+                    </div>
+                    <div class="v-register-field_wrapper_content_inputs_second-part">
+                        <div class="v-register-field_wrapper_content_inputs_second-part_second-name">
+                            <p>Second name</p>
+                            <input type="text" placeholder="Molotok" v-model="secondName">
+                        </div>
+                        <div class="v-register-field_wrapper_content_inputs_second-part_phone-number">
+                            <p>Phone number</p>
+                            <input type="text" placeholder="+380133714880" v-model="phoneNumber">
+                        </div>
+                        <div class="v-register-field_wrapper_content_inputs_second-part_password">
+                            <p>Password</p>
+                            <input type="password" placeholder="7ders" v-model="password">
+                        </div>
+                    </div>
+                </div>
+                <div class="v-register-field_wrapper_content_register-submit">
+                    <div class="v-register-field_wrapper_content_register-submit_button">
+                        <button @click="register">Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup>
+import {ref} from 'vue'
+
+let firstName = ref('')
+let secondName = ref('')
+let email = ref('')
+let gender = ref('')
+let phoneNumber = ref('')
+let password = ref('')
+
+const register = async () => {
+    try {
+        const newUser = {
+            firstName: firstName.value,
+            secondName: secondName.value,
+            email: email.value,
+            gender: gender.value,
+            phoneNumber: phoneNumber.value,
+            password: password.value
+        }
+        console.log(newUser)
+    } catch(err) {
+        console.log(err)
+    }
+}
+
+</script>
+
+<style lang="scss" scoped>
+.v-register-field {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 1200px;
+    margin: 2rem 0 0 0;
+    &_wrapper {
+        padding: 1.75rem;
+        &_content {
+
+            &_title {
+
+                p {
+                    margin: 0;
+                    padding: 0;
+                    text-align: center;
+                    color: #363062;
+                    font-weight: 500;
+                    font-size: 3.125rem;
+                }
+            }
+            &_description {
+                margin: 3.125rem 0 0 0;
+                p {
+                    margin: 0;
+                    padding: 0;
+                    font-weight: 500;
+                    font-size: 1.5rem;
+                }
+
+            }
+            &_inputs {
+                margin: 3.125rem 0 0 0;
+                display: flex;
+                justify-content: space-between;
+                &_first-part {
+                    p {
+                        margin: 0;
+                        padding: 0;
+                        color: #363062;
+                        font-weight: 500;
+                        font-size: 1.5rem;
+                    }
+                    input {
+                        font-family: 'Montserrat', sans-serif;
+                        font-size: 1.5rem;
+                        width: 450px;
+                    }
+                    &_email {
+                        margin: 3.125rem 0 3.125rem 0;
+                    }
+                }
+                &_second-part {
+                    p {
+                        margin: 0;
+                        padding: 0;
+                        color: #363062;
+                        font-weight: 500;
+                        font-size: 1.5rem;
+                    }
+                    input {
+                        font-family: 'Montserrat', sans-serif;
+                        font-size: 1.5rem;
+                        width: 450px;
+                    }
+                    &_phone-number {
+                        margin: 3.125rem 0 3.125rem 0;
+                    }
+                }
+            }
+            &_register-submit {
+                margin: 3.125rem 0 0 0;
+                display: flex;
+                justify-content: center;
+                &_button {
+                    button {
+                        width: 450px;
+                        font-size: 1.5rem;
+                        font-family: 'Montserrat', sans-serif;
+                        font-weight: 500;
+                        color: white;
+                        background: #363062;
+                        border-radius: 5px;
+                        border: none;
+                        padding: .25rem 0;
+                        &:hover {
+                            outline: 1px solid #838383;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+</style>
