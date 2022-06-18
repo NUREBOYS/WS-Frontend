@@ -33,6 +33,7 @@
 .v-user-info {
     margin: 1rem 0 0 0;
     border: 1px solid black;
+    border-radius: 5px;
     padding: 1rem;
     display: flex;
     justify-content: space-between;
