@@ -153,16 +153,19 @@ const register = async () => {
                 &_button {
                     button {
                         width: 450px;
-                        font-size: 1.5rem;
-                        font-family: 'Montserrat', sans-serif;
+                        height: 40px;
                         font-weight: 500;
-                        color: white;
-                        background: #363062;
+                        font-size: 1.25rem;
+                        font-family: 'Montserrat', sans-serif;
+                        display: inline-block;
+                        outline: none;
+                        border: 2px solid #363062;
                         border-radius: 5px;
-                        border: none;
-                        padding: .25rem 0;
+                        background: white;
+                        color: #363062;
                         &:hover {
-                            outline: 1px solid #838383;
+                            background: #363062;
+                            color: white;
                         }
                     }
                 }
