@@ -4,6 +4,7 @@ import VRegisterPage from '../views/v-register-page'
 import VLoginPage from '../views/v-login-page'
 import VCatalogPage from '../views/v-catalog-page'
 import VCartPage from '../views/v-cart-page'
+import VProfilePage from '../views/v-profile-page'
 
 const routes = [
     {
@@ -44,6 +45,14 @@ const routes = [
         component: VCartPage,
         meta: {
             title: 'Cart page'
+        }
+    },
+    {
+        path: '/profile',
+        name: 'profile-page',
+        component: VProfilePage,
+        meta: {
+            title: 'Profile page'
         }
     }
 ]

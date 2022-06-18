@@ -12,7 +12,7 @@
                             <router-link to="/catalog" class="v-header_wrapper_content_before-search_button_link">Catalog</router-link>
                         </div>
                         <div class="v-header_wrapper_content_before-search_button profile">
-                            <router-link to="/" class="v-header_wrapper_content_before-search_button_link">Profile</router-link>
+                            <router-link to="/profile" class="v-header_wrapper_content_before-search_button_link">Profile</router-link>
                         </div>
                     </v-nav-buttons>
                 </div>
