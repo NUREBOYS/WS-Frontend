@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import VCatalog from '../components/main/v-catalog'
+import VCatalog from '../components/catalog/v-catalog'
 
 </script>
 

@@ -85,11 +85,11 @@ const pushToRegister = () => {
                     text-align: center;
                     color: #363062;
                     font-weight: 500;
-                    font-size: 3.125rem;
+                    font-size: 2rem;
                 }
             }
             &_description {
-                margin: 3.125rem 0 0 0;
+                margin: 2rem 0 0 0;
                 p {
                     margin: 0;
                     padding: 0;
@@ -99,7 +99,7 @@ const pushToRegister = () => {
 
             }
             &_inputs {
-                margin: 3.125rem 0 0 0;
+                margin: 2rem 0 0 0;
                 display: flex;
                 justify-content: space-between;
                 &_content {

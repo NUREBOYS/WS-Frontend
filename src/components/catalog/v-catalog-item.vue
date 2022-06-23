@@ -13,7 +13,7 @@
                         <p>{{props.watch.price}}$</p>
                     </div>
                     <div class="v-catalog-item_wrapper_content_details_buy-button">
-                        <button>Add to cart</button>
+                        <button @click="addToCart" :disabled="isAddedToCart">Add to cart</button>
                     </div>
                 </div>
             </div>
@@ -22,6 +22,11 @@
 </template>
 
 <script setup>
+import {ref, onMounted} from 'vue'
+import {useStore} from 'vuex'
+
+let isAddedToCart = ref(false)
+const store = useStore()
 
 // eslint-disable-next-line no-undef,no-unused-vars
 const props = defineProps({
@@ -33,6 +38,19 @@ const props = defineProps({
     }
 })
 
+const addToCart = () => {
+    store.dispatch('addToCart', props.watch)
+    isAddedToCart.value = true
+}
+
+onMounted(() => {
+    const watchesInCart = store.getters.getCart
+    watchesInCart.forEach(watch => {
+        if(props.watch.id === watch.id) {
+            isAddedToCart.value = true
+        }
+    })
+})
 
 </script>
 

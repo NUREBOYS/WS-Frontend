@@ -1,6 +1,6 @@
 <template>
     <div class="v-register-page">
-        <v-register-field />
+        <v-register-field :title="'Register'"/>
     </div>
 </template>
 

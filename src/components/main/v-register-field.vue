@@ -3,10 +3,10 @@
         <div class="v-register-field_wrapper">
             <div class="v-register-field_wrapper_content">
                 <div class="v-register-field_wrapper_content_title">
-                    <p>Register</p>
+                    <p>{{props.title}}</p>
                 </div>
                 <div class="v-register-field_wrapper_content_description">
-                    <p>For successful register, please fill in the below form then click ‘Register’.</p>
+                    <p>For successful register, please fill in the below form then click ‘{{props.title}}’.</p>
                 </div>
                 <div class="v-register-field_wrapper_content_inputs">
                     <div class="v-register-field_wrapper_content_inputs_first-part">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="v-register-field_wrapper_content_inputs_second-part_phone-number">
                             <p>Phone number</p>
-                            <input type="text" placeholder="+380133714880" v-model="phoneNumber">
+                            <input type="text" placeholder="+380133712345" v-model="phoneNumber">
                         </div>
                         <div class="v-register-field_wrapper_content_inputs_second-part_password">
                             <p>Password</p>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="v-register-field_wrapper_content_register-submit">
                     <div class="v-register-field_wrapper_content_register-submit_button">
-                        <button @click="register">Register</button>
+                        <button @click="register">{{props.title}}</button>
                     </div>
                 </div>
             </div>
@@ -51,12 +51,25 @@
 <script setup>
 import {ref} from 'vue'
 
+// eslint-disable-next-line no-undef,no-unused-vars
+const props = defineProps({
+    title: {
+        type: String,
+        default: ''
+    },
+    role: {
+        type: String,
+        default: ''
+    }
+})
+
 let firstName = ref('')
 let secondName = ref('')
 let email = ref('')
 let gender = ref('')
 let phoneNumber = ref('')
 let password = ref('')
+let role = props.role ? props.role : 'user'
 
 const register = async () => {
     try {
@@ -66,7 +79,8 @@ const register = async () => {
             email: email.value,
             gender: gender.value,
             phoneNumber: phoneNumber.value,
-            password: password.value
+            password: password.value,
+            role
         }
         console.log(newUser)
     } catch(err) {
@@ -94,21 +108,21 @@ const register = async () => {
                     text-align: center;
                     color: #363062;
                     font-weight: 500;
-                    font-size: 3.125rem;
+                    font-size: 2rem;
                 }
             }
             &_description {
-                margin: 3.125rem 0 0 0;
+                margin: 2rem 0 0 0;
                 p {
                     margin: 0;
                     padding: 0;
                     font-weight: 500;
-                    font-size: 1.5rem;
+                    font-size: 1.25rem;
                 }
 
             }
             &_inputs {
-                margin: 3.125rem 0 0 0;
+                margin: 2rem 0 0 0;
                 display: flex;
                 justify-content: space-between;
                 &_first-part {

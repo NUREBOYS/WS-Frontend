@@ -12,7 +12,7 @@
                     <p>{{props.watch.price}}$</p>
                 </div>
                 <div class="v-cart-item_wrapper_content_delete-button">
-                    <button>Delete</button>
+                    <button @click="deleteFromCart">Delete</button>
                 </div>
             </div>
         </div>
@@ -20,6 +20,9 @@
 </template>
 
 <script setup>
+import {useStore} from 'vuex'
+
+const store = useStore()
 
 // eslint-disable-next-line no-undef,no-unused-vars
 const props = defineProps({
@@ -28,8 +31,16 @@ const props = defineProps({
         default() {
             return {}
         }
+    },
+    index: {
+        type: Number,
+        default: null
     }
 })
+
+const deleteFromCart = () => {
+    store.dispatch('deleteFromCart', props.index)
+}
 
 </script>
 

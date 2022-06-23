@@ -21,53 +21,14 @@
 </template>
 
 <script setup>
-// import {ref} from 'vue'
+import {computed} from 'vue'
+import {useStore} from 'vuex'
 import VCatalogItem from './v-catalog-item'
 import VCatalogFilter from './v-catalog-filter'
 
-const watches = [
-    {
-        image: 'watch1.png',
-        title: 'Grand Complication 5372G',
-        price: 100000
-    },
-    {
-        image: 'watch1.png',
-        title: 'Grand Complication 5372G',
-        price: 100000
-    },
-    {
-        image: 'watch1.png',
-        title: 'Grand Complication 5372G',
-        price: 100000
-    },
-    {
-        image: 'watch1.png',
-        title: 'Grand Complication 5372G',
-        price: 100000
-    },
-    {
-        image: 'watch1.png',
-        title: 'Grand Complication 5372G',
-        price: 100000
-    },
-    {
-        image: 'watch1.png',
-        title: 'Grand Complication 5372G',
-        price: 100000
-    },
-    {
-        image: 'watch1.png',
-        title: 'Grand Complication 5372G',
-        price: 100000
-    },
-    {
-        image: 'watch1.png',
-        title: 'Grand Complication 5372G',
-        price: 100000
-    }
-]
+const store = useStore()
 
+const watches = computed(() => store.getters.getWatches)
 
 </script>
 

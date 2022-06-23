@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import VOrderStatus from './v-order-status'
+import VOrderStatus from '../main/v-order-status'
 
 // eslint-disable-next-line no-undef,no-unused-vars
 const props = defineProps({

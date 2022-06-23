@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import VProfile from '../components/main/v-profile'
+import VProfile from '../components/profile/v-profile'
 
 </script>
 

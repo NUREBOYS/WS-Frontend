@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import VCart from '../components/main/v-cart'
+import VCart from '../components/cart/v-cart'
 
 </script>
 
