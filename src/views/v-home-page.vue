@@ -6,11 +6,15 @@
         <div class="v-home-page_title">
             <p>Popular brands</p>
         </div>
+        <div class="v-home-page_popular-brands">
+            <v-popular-brands />
+        </div>
     </div>
 </template>
 
 <script setup>
 import VSlider from '../components/main/v-slider'
+import VPopularBrands from '../components/main/v-popular-brands'
 
 const slides = [
     'For-him-banner.png',
@@ -33,6 +37,9 @@ const slides = [
             padding: 0;
             text-align: center;
         }
+    }
+    &_popular-brands {
+
     }
 }
 </style>

@@ -3,6 +3,10 @@ export default {
         return state.watches
     },
 
+    getPopularBrands(state) {
+        return state.popularBrands
+    },
+
     getTotalPages(state) {
         return state.totalPages
     },

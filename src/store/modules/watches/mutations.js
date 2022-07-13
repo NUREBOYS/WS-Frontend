@@ -3,6 +3,10 @@ export default {
         state.watches = watches
     },
 
+    SET_POPULAR_BRANDS(state, brands) {
+        state.popularBrands = brands
+    },
+
     SET_TOTAL_PAGES(state, totalPages) {
         state.totalPages = totalPages
     },

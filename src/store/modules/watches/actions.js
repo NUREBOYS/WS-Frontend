@@ -53,8 +53,14 @@ export default {
         }
     },
 
-
-
+    async getPopularBrands({commit}) {
+        try {
+            const res = await axios.get('http://localhost:3000/products/popular-manufacturers')
+            commit('SET_POPULAR_BRANDS', res.data.body[0].hot)
+        } catch(err) {
+            console.log(err)
+        }
+    },
 
     setPage({commit}, newPage) {
         commit('SET_PAGE', newPage)

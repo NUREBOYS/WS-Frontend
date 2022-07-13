@@ -37,7 +37,9 @@ const watches = computed(() => store.getters.getWatches)
 const totalPages = computed(() => store.getters.getTotalPages)
 
 onMounted(() => {
-    store.dispatch('getWatches', {})
+    if(watches.value.length === 0) {
+        store.dispatch('getWatches', {})
+    }
 })
 
 </script>
