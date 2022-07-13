@@ -3,18 +3,22 @@
         <div class="v-admin-orders_wrapper">
             <div class="v-admin-orders_wrapper_content">
                 <div class="v-admin-orders_wrapper_content_title">
-                    <p>Catalog</p>
+                    <p>Orders</p>
                 </div>
                 <div class="v-admin-orders_wrapper_content_filters">
                     <v-filter-orders />
                 </div>
                 <div class="v-admin-orders_wrapper_content_orders">
+                    <p v-if="orders.length === 0">Order list is empty =^_^=</p>
                     <v-admin-orders-item
-                        v-for="(order, index) in orders"
-                        :key="index"
+                        v-for="order in orders"
+                        :key="order._id"
                         :order="order"
                     />
                 </div>
+                <v-order-pagination
+                    :totalPages="totalPages"
+                />
             </div>
         </div>
         <v-change-order-status
@@ -24,69 +28,22 @@
 </template>
 
 <script setup>
-import {computed} from 'vue'
+import {computed, onMounted} from 'vue'
 import {useStore} from 'vuex'
 import VFilterOrders from './v-filter-orders'
 import VAdminOrdersItem from './v-admin-orders-item'
 import VChangeOrderStatus from './v-change-order-status'
-
-const orders = [
-    {
-        orderNumber: 1245,
-        watches: [
-            'Nautilus 5726A',
-            'Aquanaut 5968G',
-            'Grand Complication 5470P'
-        ],
-        date: '13.05.2022',
-        price: 23500,
-        amount: 3,
-        status: 'Pending',
-        name: 'Sanya',
-        surname: 'Britva',
-        address: 'Poltava, Tahtik, 62',
-        gender: 'man',
-        phoneNumber: '+380957657698',
-        email: 'nttdy@zebra.com '
-    },
-    {
-        orderNumber: 1134,
-        watches: [
-            'Nautilus 5726A',
-            'Grand Complication 5470P'
-        ],
-        date: '12.02.2022',
-        price: 27000,
-        amount: 2,
-        status: 'Done',
-        name: 'Sanya',
-        surname: 'Britva',
-        address: 'Poltava, Tahtik, 62',
-        gender: 'man',
-        phoneNumber: '+380957657698',
-        email: 'nttdy@zebra.com '
-    },
-    {
-        orderNumber: 954,
-        watches: [
-            'Grand Complication 5320G'
-        ],
-        date: '15.12.2021',
-        price: 8700,
-        amount: 1,
-        status: 'Declined',
-        name: 'Sanya',
-        surname: 'Britva',
-        address: 'Poltava, Tahtik, 62',
-        gender: 'man',
-        phoneNumber: '+380957657698',
-        email: 'nttdy@zebra.com '
-    }
-]
+import VOrderPagination from '../main/v-order-pagination'
 
 const store = useStore()
 
+const orders = computed(() => store.getters.getOrders)
 let isActive = computed(() => store.getters.getModal)
+let totalPages = computed(() => store.getters.getOrderTotalPages)
+
+onMounted(() => {
+    store.dispatch('getOrders')
+})
 
 </script>
 
@@ -105,6 +62,15 @@ let isActive = computed(() => store.getters.getModal)
                     color: #363062;
                     font-weight: 500;
                     margin: 0;
+                    padding: 0;
+                    text-align: center;
+                }
+            }
+            &_orders {
+                p {
+                    font-size: 1.25rem;
+                    font-weight: 500;
+                    margin: 1rem 0 0 0;
                     padding: 0;
                     text-align: center;
                 }

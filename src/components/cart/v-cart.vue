@@ -15,7 +15,9 @@
                     />
                 </div>
                 <div class="v-cart_wrapper_content_confirm">
-                    <v-confirm-form />
+                    <v-confirm-form
+                        v-if="watchesFromCart.length !== 0"
+                    />
                 </div>
             </div>
         </div>

@@ -1,13 +1,13 @@
 <template>
     <p
         class="v-order-status pending"
-        v-if="props.status === 'Pending'"
+        v-if="props.status === 'pending'"
     >
         {{props.status}}
     </p>
     <p
         class="v-order-status done"
-        v-else-if="props.status === 'Done'"
+        v-else-if="props.status === 'approved'"
     >
         {{props.status}}
     </p>

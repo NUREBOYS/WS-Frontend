@@ -5,15 +5,43 @@
                 <p>Change status</p>
             </div>
             <div class="v-change-order-status_inputs_edit-buttons">
-                <button style="background: #27AE60">Done</button>
-                <button style="background: #E74C3C">Decline</button>
+                <button style="background: #27AE60" @click="approve">Done</button>
+                <button style="background: #E74C3C" @click="reject">Decline</button>
             </div>
         </v-admin-modal>
     </div>
 </template>
 
 <script setup>
+import {ref, onMounted, computed} from 'vue'
+import {useStore} from 'vuex'
 import VAdminModal from '../main/v-admin-modal'
+
+const store = useStore()
+
+const orderId = ref('')
+let currentOrder = computed(() => store.getters.getOrderById)
+
+const approve = () => {
+    if(currentOrder.value.status === 'rejected') {
+        alert('Status already rejected')
+        store.dispatch('changeModal', {name: 'change-order-status', status: false})
+        return
+    }
+    store.dispatch('approveOrder', { orderId: orderId.value, status: 'approved'})
+    store.dispatch('clearOrderId')
+    store.dispatch('changeModal', {name: 'change-order-status', status: false})
+}
+
+const reject = () => {
+    store.dispatch('rejectOrder', { orderId: orderId.value, status: 'rejected'})
+    store.dispatch('clearOrderId')
+    store.dispatch('changeModal', {name: 'change-order-status', status: false})
+}
+
+onMounted(() => {
+    orderId.value = store.getters.getOrderId
+})
 
 </script>
 
