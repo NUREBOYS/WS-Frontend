@@ -8,19 +8,42 @@
                 <div class="v-delete-product_inputs_find-name">
                     <div class="">
                         <p>Enter product name</p>
-                        <input type="text">
+                        <input type="text" @input="search($event.target.value)">
                     </div>
                 </div>
             </div>
+            <div class="">
+                <v-searched-products
+                    :watches="watches"
+                />
+            </div>
             <div class="v-delete-product_inputs_delete-button">
-                <button>Delete product</button>
+                <button @click="deleteProduct">Delete product</button>
             </div>
         </v-admin-modal>
     </div>
 </template>
 
 <script setup>
+import {computed} from 'vue'
+import {useStore} from 'vuex'
 import VAdminModal from '../main/v-admin-modal'
+import VSearchedProducts from './v-searched-products'
+
+const store = useStore()
+
+const watches = computed(() => store.getters.getWatches)
+
+const search = searchValue => {
+    store.dispatch('getWatches', {search: searchValue})
+}
+
+const deleteProduct = () => {
+    const selectedProductId = store.getters.getSelectedProductId
+    store.dispatch('deleteWatch', selectedProductId)
+    alert('Product was deleted')
+    store.dispatch('changeModal', {name: 'delete-product', status: false})
+}
 
 </script>
 

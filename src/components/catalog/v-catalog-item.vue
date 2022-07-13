@@ -3,17 +3,23 @@
         <div class="v-catalog-item_wrapper">
             <div class="v-catalog-item_wrapper_content">
                 <div class="v-catalog-item_wrapper_content_image">
-                    <img :src="require('../../assets/' + props.watch.image)" alt="watch-logo">
+                    <img src="../../assets/watch1.png" alt="watch-logo">
                 </div>
                 <div class="v-catalog-item_wrapper_content_details">
                     <div class="v-catalog-item_wrapper_content_details_title">
-                        <p>{{props.watch.title}}</p>
+                        <p>{{props.watch.manufacturer}}</p>
+                    </div>
+                    <div class="v-catalog-item_wrapper_content_details_title">
+                        <p>{{props.watch.name}}</p>
+                    </div>
+                    <div class="v-catalog-item_wrapper_content_details_title">
+                        <p>Material: {{props.watch.material}}</p>
                     </div>
                     <div class="v-catalog-item_wrapper_content_details_price">
                         <p>{{props.watch.price}}$</p>
                     </div>
                     <div class="v-catalog-item_wrapper_content_details_buy-button">
-                        <button @click="addToCart" :disabled="isAddedToCart">Add to cart</button>
+                        <button @click="addToCart" :disabled="isAddedToCart">{{ isAddedToCart ? 'Already in cart': 'Add to cart' }}</button>
                     </div>
                 </div>
             </div>
@@ -26,6 +32,7 @@ import {ref, onMounted} from 'vue'
 import {useStore} from 'vuex'
 
 let isAddedToCart = ref(false)
+
 const store = useStore()
 
 // eslint-disable-next-line no-undef,no-unused-vars
@@ -46,7 +53,7 @@ const addToCart = () => {
 onMounted(() => {
     const watchesInCart = store.getters.getCart
     watchesInCart.forEach(watch => {
-        if(props.watch.id === watch.id) {
+        if(props.watch._id === watch._id) {
             isAddedToCart.value = true
         }
     })
@@ -59,7 +66,6 @@ onMounted(() => {
     box-shadow: 0 4px 20px rgba(0, 0, 0, .1);
     border-radius: 5px;
     width: 250px;
-    height: 350px;
     margin: 1rem 0 0 0;
     transition: all .05s ease-in;
     padding: 1.5rem 1rem 1.5rem 1rem;
