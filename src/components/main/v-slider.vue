@@ -6,16 +6,16 @@
                     <img :src="require(`../../assets/${slide}`)" alt="slide-item">
                 </Slide>
 
-                <template #addons>
-                    <Pagination />
-                </template>
+<!--                <template #addons>-->
+<!--                    <Pagination />-->
+<!--                </template>-->
             </Carousel>
         </div>
     </div>
 </template>
 
 <script setup>
-import { Carousel, Pagination, Slide } from 'vue3-carousel'
+import { Carousel, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
 // eslint-disable-next-line no-undef,no-unused-vars

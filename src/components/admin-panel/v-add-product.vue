@@ -7,28 +7,82 @@
             <div class="v-add-product_inputs_name-price">
                 <div class="">
                     <p>Product name</p>
-                    <input type="text">
+                    <input type="text" v-model="product.name">
                 </div>
                 <div class="">
                     <p>Price</p>
-                    <input type="text">
+                    <input type="text" v-model.number="product.price">
+                </div>
+            </div>
+            <div class="v-add-product_inputs_name-price">
+                <div class="">
+                    <p>Manufacturer</p>
+                    <input type="text" v-model="product.manufacturer">
+                </div>
+                <div class="">
+                    <p>Gender</p>
+                    <select v-model="product.gender">
+                        <option>na</option>
+                        <option>female</option>
+                        <option>male</option>
+                    </select>
+                </div>
+            </div>
+            <div class="v-add-product_inputs_photo">
+                <div class="">
+                    <p>Material</p>
+                    <select v-model="product.material">
+                        <option>roseGold</option>
+                        <option>gold</option>
+                        <option>stainlessSteel </option>
+                    </select>
                 </div>
             </div>
             <div class="v-add-product_inputs_photo">
                 <div class="">
                     <p>Photo URL</p>
-                    <input type="text">
+                    <input type="text" v-model="product.imageUrl">
                 </div>
             </div>
             <div class="v-add-product_inputs_add-button">
-                <button>Add new product</button>
+                <button @click="addNewProduct">Add new product</button>
             </div>
         </v-admin-modal>
     </div>
 </template>
 
 <script setup>
+import {ref} from 'vue'
+import {useStore} from 'vuex'
 import VAdminModal from '../main/v-admin-modal'
+
+const store = useStore()
+
+const product = ref({
+    name: '',
+    manufacturer: '',
+    price: 0,
+    imageUrl: '',
+    gender: '',
+    material: ''
+})
+
+const addNewProduct = () => {
+    store.dispatch('addWatch', product.value)
+
+    for(let field in product.value) {
+        if(typeof product.value[field] === 'number' ) {
+            product.value[field] = 0
+        } else {
+            product.value[field] = ''
+        }
+
+    }
+
+    alert('Product was added')
+
+    store.dispatch('changeModal', {name: '', status: false})
+}
 
 </script>
 

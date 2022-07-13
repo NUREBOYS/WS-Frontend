@@ -2,12 +2,27 @@
     <div class="v-search">
         <div class="v-search_wrapper">
             <div class="v-search_wrapper_content">
-                <input type="text" placeholder="Search for watches..."/>
+                <input
+                    type="text"
+                    placeholder="Search for watches..."
+                    @input="search($event.target.value)"
+                />
             </div>
         </div>
     </div>
 </template>
 
+<script setup>
+import {useStore} from 'vuex'
+
+const store = useStore()
+
+const search = searchValue => {
+    store.dispatch('setSearchStatus', true)
+    store.dispatch('getWatches', {search: searchValue})
+}
+
+</script>
 
 <style lang="scss" scoped>
 .v-search {

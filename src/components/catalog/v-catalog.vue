@@ -9,26 +9,36 @@
                     <v-catalog-filter />
                 </div>
                 <div class="v-catalog_wrapper_content_catalog">
+                    <p class="v-catalog_wrapper_content_catalog_product-not-found" v-if="watches.length === 0">Products not found :(</p>
                     <v-catalog-item
-                        v-for="(watch, index) in watches"
-                        :key="index"
+                        v-for="watch in watches"
+                        :key="watch._id"
                         :watch="watch"
                     />
                 </div>
+                <v-catalog-pagination
+                    :totalPages="totalPages"
+                />
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import {computed} from 'vue'
+import {computed, onMounted} from 'vue'
 import {useStore} from 'vuex'
 import VCatalogItem from './v-catalog-item'
 import VCatalogFilter from './v-catalog-filter'
+import VCatalogPagination from './v-catalog-pagination'
 
 const store = useStore()
 
 const watches = computed(() => store.getters.getWatches)
+const totalPages = computed(() => store.getters.getTotalPages)
+
+onMounted(() => {
+    store.dispatch('getWatches', {})
+})
 
 </script>
 
@@ -55,7 +65,11 @@ const watches = computed(() => store.getters.getWatches)
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: space-between;
-
+                &_product-not-found {
+                    width: 100%;
+                    text-align: center;
+                    font-size: 2.5rem;
+                }
             }
         }
     }

@@ -8,35 +8,91 @@
                 <div class="v-edit-product_inputs_find-name">
                     <div class="">
                         <p>Enter product name</p>
-                        <input type="text">
+                        <input type="text" @input="search($event.target.value)">
                     </div>
                 </div>
+            </div>
+            <div class="">
+                <v-searched-products
+                    :watches="watches"
+                />
             </div>
             <div class="v-edit-product_inputs_name-price">
                 <div class="">
                     <p>New product name</p>
-                    <input type="text">
+                    <input type="text" v-model="newProduct.name">
                 </div>
                 <div class="">
-                    <p>New price</p>
-                    <input type="text">
+                    <p>Price</p>
+                    <input type="text" v-model.number="newProduct.price">
+                </div>
+            </div>
+            <div class="v-edit-product_inputs_name-price">
+                <div class="">
+                    <p>Manufacturer</p>
+                    <input type="text" v-model="newProduct.manufacturer">
+                </div>
+                <div class="">
+                    <p>Gender</p>
+                    <select v-model="newProduct.gender">
+                        <option>na</option>
+                        <option>female</option>
+                        <option>male</option>
+                    </select>
                 </div>
             </div>
             <div class="v-edit-product_inputs_photo">
                 <div class="">
-                    <p>New photo URL</p>
-                    <input type="text">
+                    <p>Material</p>
+                    <select v-model="newProduct.material">
+                        <option>roseGold</option>
+                        <option>gold</option>
+                        <option>stainlessSteel </option>
+                    </select>
+                </div>
+            </div>
+            <div class="v-edit-product_inputs_photo">
+                <div class="">
+                    <p>Photo URL</p>
+                    <input type="text" v-model="newProduct.imageUrl">
                 </div>
             </div>
             <div class="v-edit-product_inputs_edit-button">
-                <button>Save changes</button>
+                <button @click="saveChanges">Save changes</button>
             </div>
         </v-admin-modal>
     </div>
 </template>
 
 <script setup>
+import {ref, computed} from 'vue'
+import {useStore} from 'vuex'
 import VAdminModal from '../main/v-admin-modal'
+import VSearchedProducts from './v-searched-products'
+
+const store = useStore()
+
+const watches = computed(() => store.getters.getWatches)
+
+const newProduct = ref({
+    name: '',
+    manufacturer: '',
+    price: 0,
+    imageUrl: '',
+    gender: '',
+    material: ''
+})
+
+const search = searchValue => {
+    store.dispatch('getWatches', {search: searchValue})
+}
+
+const saveChanges = () => {
+    const selectedProductId = store.getters.getSelectedProductId
+    store.dispatch('editWatch', {selectedProductId, watch: newProduct.value})
+    alert('Product was changed')
+    store.dispatch('changeModal', {name: 'edit-product', status: false})
+}
 
 </script>
 
