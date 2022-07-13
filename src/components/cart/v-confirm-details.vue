@@ -4,10 +4,10 @@
             <div class="v-confirm-details_wrapper_content">
                 <div class="v-confirm-details_wrapper_content_text">
                     <div class="v-confirm-details_wrapper_content_text_total-price">
-                        <p>Total price: <span class="price">10000$</span></p>
+                        <p>Total price: <span class="price">{{ totalPrice }}$</span></p>
                     </div>
                     <div class="v-confirm-details_wrapper_content_text_total-amount">
-                        <p>Total amount: <span class="amount">3</span></p>
+                        <p>Total amount: <span class="amount">{{ totalAmount }}</span></p>
                     </div>
                 </div>
                 <div class="v-confirm-details_wrapper_content_confirm-button">
@@ -19,6 +19,20 @@
 </template>
 
 <script setup>
+import {computed} from 'vue'
+import {useStore} from 'vuex'
+
+const store = useStore()
+const totalPrice = computed(() => {
+    const watches = store.getters.getCart
+    return watches.reduce((sum, watch) => sum + watch.price, 0)
+})
+const totalAmount = computed(() => {
+    const watches = store.getters.getCart
+    return watches.length
+})
+
+
 
 </script>
 

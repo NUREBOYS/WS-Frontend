@@ -8,35 +8,39 @@
                 <p class="orders-item-text">Products name:</p>
                 <p
                     class="orders-item-text"
-                    v-for="(watch, index) in props.order.watches"
+                    v-for="(watch, index) in props.order.items"
                     :key="index"
                 >
-                    - {{watch}}
+                    - {{watch.manufacturer}} - {{watch.name}}
                 </p>
             </div>
         </div>
         <div class="v-admin-orders-item_date">
-            <p class="orders-item-text">Order date: {{props.order.date}}</p>
+            <p class="orders-item-text">Order date: {{props.order.createdAt}}</p>
             <p class="orders-item-text" style="margin: 1rem 0 0 0;">First name: {{props.order.name}}</p>
-            <p class="orders-item-text">Address: {{props.order.address}}</p>
+            <p class="orders-item-text">Country: {{props.order.deliveryDetails.country}}</p>
+            <p class="orders-item-text">City: {{props.order.deliveryDetails.city}}</p>
+            <p class="orders-item-text">Street: {{props.order.deliveryDetails.street}}</p>
         </div>
         <div class="v-admin-orders-item_phone-price">
-            <p class="orders-item-text">Total price: {{props.order.price}}$</p>
+            <p class="orders-item-text">Total price: {{props.order.totalPrice}}$</p>
             <p class="orders-item-text" style="margin: 1rem 0 0 0;">Second name: {{props.order.surname}}</p>
             <p class="orders-item-text">Gender: {{props.order.gender}}</p>
         </div>
         <div class="v-admin-orders-item_amount-status">
             <div class="v-admin-orders-item_amount-status_amount">
-                <p class="orders-item-text">Total amount: {{props.order.amount}}</p>
+                <p class="orders-item-text">Total amount: {{props.order.items.length}}</p>
                 <p class="orders-item-text" style="margin: 1rem 0 0 0;">Phone number: {{props.order.phoneNumber}}</p>
                 <p class="orders-item-text">Email: {{props.order.email}}</p>
             </div>
             <div class="v-admin-orders-item_amount-status_status">
-                <p class="orders-item-text" style="margin: 1rem 0 0 0;">Order status: <v-order-status :status="props.order.status"/></p>
+                <p class="orders-item-text" style="margin: 1rem 0 0 0;">
+                    Order status: <v-order-status :status="props.order.status"/>
+                </p>
             </div>
             <div class="v-admin-orders-item_amount-status_change-buttons">
                 <button style="margin: 0 .25rem 0 0;" @click="showChangeStatus">Change status</button>
-                <button style="margin: 0 0 0 .25rem;">Delete</button>
+                <button style="margin: 0 0 0 .25rem;" @click="deleteOrder">Delete</button>
             </div>
         </div>
     </div>
@@ -60,6 +64,12 @@ const props = defineProps({
 
 const showChangeStatus = () => {
     store.dispatch('changeModal', {name: 'change-order-status', status: true})
+    store.dispatch('setOrderId', props.order._id)
+    store.dispatch('getOrderById', props.order._id)
+}
+
+const deleteOrder = () => {
+    store.dispatch('deleteOrder', props.order._id)
 }
 
 </script>
@@ -79,7 +89,7 @@ const showChangeStatus = () => {
     }
     &_number-product-list {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-start;
         flex-direction: column;
         &_product-list {
             margin: 1rem 0 0 0;

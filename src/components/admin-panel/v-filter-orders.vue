@@ -2,8 +2,8 @@
     <div class="v-filter-orders">
         <div class="v-filter-orders_content">
             <button
-                @click="setFilter('done')"
-                :style="[filterIsActive.done ? 'background: #363062; color: white;' : '']"
+                @click="setFilter('approved')"
+                :style="[filterIsActive.approved ? 'background: #363062; color: white;' : '']"
             >
                 Done
             </button>
@@ -14,8 +14,8 @@
                 Pending
             </button>
             <button
-                @click="setFilter('declined')"
-                :style="[filterIsActive.declined ? 'background: #363062; color: white;' : '']"
+                @click="setFilter('rejected')"
+                :style="[filterIsActive.rejected ? 'background: #363062; color: white;' : '']"
             >
                 Declined
             </button>
@@ -28,33 +28,39 @@
 
 <script setup>
 import {ref} from 'vue'
+import {useStore} from 'vuex'
+
+const store = useStore()
 
 let selectedFilter = ref('All')
-let currentFilter = ref('')
+let currentFilter = ''
 const filterIsActive = ref({
-    done: false,
+    approved: false,
     pending: false,
-    declined: false,
+    rejected: false,
 })
 const filterValues = {
-    done: 'Done',
+    approved: 'Done',
     pending: 'Pending',
-    declined: 'Declined',
+    rejected: 'Declined',
 }
 
 const setFilter = newFilterParam => {
-    if(currentFilter.value !== newFilterParam && currentFilter.value) {
-        filterIsActive.value[currentFilter.value] = false
+    if(currentFilter !== newFilterParam && currentFilter) {
+        filterIsActive.value[currentFilter] = false
     }
 
     if(filterIsActive.value[newFilterParam]) {
         selectedFilter.value = 'All'
         filterIsActive.value[newFilterParam] = false
+        currentFilter = ''
+        store.dispatch('getOrders', currentFilter)
     } else {
         selectedFilter.value = filterValues[newFilterParam]
         filterIsActive.value[newFilterParam] = true
+        currentFilter = newFilterParam
+        store.dispatch('getOrders', currentFilter)
     }
-    currentFilter.value = newFilterParam
 
 }
 </script>

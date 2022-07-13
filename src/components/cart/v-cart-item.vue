@@ -3,10 +3,16 @@
         <div class="v-cart-item_wrapper">
             <div class="v-cart-item_wrapper_content">
                 <div class="v-cart-item_wrapper_content_image">
-                    <img :src="require('../../assets/' + props.watch.image)" alt="watch-logo">
+                    <img src="../../assets/watch1.png" alt="watch-logo">
                 </div>
                 <div class="v-cart-item_wrapper_content_title">
-                    <p>{{props.watch.title}}</p>
+                    <p>{{props.watch.manufacturer}}</p>
+                </div>
+                <div class="v-cart-item_wrapper_content_title">
+                    <p>{{props.watch.name}}</p>
+                </div>
+                <div class="v-cart-item_wrapper_content_title">
+                    <p>Material: {{props.watch.material}}</p>
                 </div>
                 <div class="v-cart-item_wrapper_content_price">
                     <p>{{props.watch.price}}$</p>
