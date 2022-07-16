@@ -21,5 +21,25 @@ export default {
 
     SET_SELECTED_PRODUCT_ID(state, newSelectedProductId) {
         state.selectedProductId = newSelectedProductId
+    },
+
+    SET_GENDER(state, gender) {
+        state.currentFilter.gender = gender
+    },
+
+    SET_MATERIAL(state, material) {
+        state.currentFilter.material = material
+    },
+
+    SET_MANUFACTURER(state, manufacturer) {
+        state.currentFilter.manufacturer = manufacturer
+    },
+
+    SET_SORT(state, sort) {
+        state.currentFilter.gender = sort
+    },
+
+    SET_SEARCH(state, searchValue) {
+        state.currentFilter.search = searchValue
     }
 }

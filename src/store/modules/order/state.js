@@ -5,5 +5,6 @@ export default {
     orderCurrentPage: 1,
     orderPage: 1,
     ordersPerPage: 2,
-    orderTotalPages: 0
+    orderTotalPages: 0,
+    currentOrderFilter: ''
 }

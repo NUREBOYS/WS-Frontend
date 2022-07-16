@@ -5,5 +5,12 @@ export default {
     perPage: 4,
     totalPages: 0,
     selectedProductId: '',
-    popularBrands: []
+    popularBrands: [],
+    currentFilter: {
+        gender: '',
+        material: '',
+        manufacturer: '',
+        sort: '',
+        search: ''
+    }
 }

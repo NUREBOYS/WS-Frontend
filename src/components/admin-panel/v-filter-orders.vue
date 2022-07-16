@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import {useStore} from 'vuex'
 
 const store = useStore()
@@ -54,15 +54,26 @@ const setFilter = newFilterParam => {
         selectedFilter.value = 'All'
         filterIsActive.value[newFilterParam] = false
         currentFilter = ''
-        store.dispatch('getOrders', currentFilter)
+        store.dispatch('setFilter', '')
+        store.dispatch('getOrders', {})
     } else {
         selectedFilter.value = filterValues[newFilterParam]
         filterIsActive.value[newFilterParam] = true
         currentFilter = newFilterParam
-        store.dispatch('getOrders', currentFilter)
+        store.dispatch('setFilter', newFilterParam)
+        store.dispatch('getOrders', {})
     }
-
 }
+
+onMounted(() => {
+    const currentOrderFilter = store.getters.getOrderCurrentFilter
+    for(let item in filterIsActive.value) {
+        if(item === currentOrderFilter) {
+            filterIsActive.value[item] = true
+            selectedFilter.value = currentOrderFilter
+        }
+    }
+})
 </script>
 
 <style lang="scss" scoped>

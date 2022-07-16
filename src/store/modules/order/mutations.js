@@ -37,5 +37,9 @@ export default {
 
     SET_CURRENT_PAGE(state, newCurrentPage) {
         state.orderCurrentPage = newCurrentPage
+    },
+
+    SET_FILTER(state, filter) {
+        state.currentOrderFilter = filter
     }
 }
