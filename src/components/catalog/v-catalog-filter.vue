@@ -81,7 +81,7 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import {useStore} from 'vuex'
 
 const store = useStore()
@@ -143,12 +143,14 @@ const setGenderFilter = newGenderFilter => {
         selectedFilter.value = 'All watches'
         genderFilterIsActive.value[newGenderFilter] = false
         currentFilter.gender = ''
-        store.dispatch('getWatches', currentFilter)
+        store.dispatch('setGender', '')
+        store.dispatch('getWatches', {})
     } else {
         selectedFilter.value = genderFilterValues[newGenderFilter]
         genderFilterIsActive.value[newGenderFilter] = true
         currentFilter.gender = newGenderFilter
-        store.dispatch('getWatches', currentFilter)
+        store.dispatch('setGender', newGenderFilter)
+        store.dispatch('getWatches', {})
     }
 }
 
@@ -161,17 +163,18 @@ const setMaterialFilter = newMaterialFilter => {
         selectedFilter.value = 'All watches'
         materialFilterIsActive.value[newMaterialFilter] = false
         currentFilter.material = ''
-        store.dispatch('getWatches', currentFilter)
+        store.dispatch('setMaterial', '')
+        store.dispatch('getWatches', {})
     } else {
         selectedFilter.value = materialFilterValues[newMaterialFilter]
         materialFilterIsActive.value[newMaterialFilter] = true
         currentFilter.material = newMaterialFilter
-        store.dispatch('getWatches', currentFilter)
+        store.dispatch('setMaterial', newMaterialFilter)
+        store.dispatch('getWatches', {})
     }
 }
 
 const setBrandFilter = newBrandFilter => {
-    console.log(newBrandFilter)
     if(currentFilter.manufacturer !== newBrandFilter && currentFilter.manufacturer) {
         brandFilterIsActive.value[currentFilter.manufacturer] = false
     }
@@ -180,12 +183,14 @@ const setBrandFilter = newBrandFilter => {
         selectedFilter.value = 'All watches'
         brandFilterIsActive.value[newBrandFilter] = false
         currentFilter.manufacturer = ''
-        store.dispatch('getWatches', currentFilter)
+        store.dispatch('setManufacturer', '')
+        store.dispatch('getWatches', {})
     } else {
         selectedFilter.value = brandFilterValues[newBrandFilter]
         brandFilterIsActive.value[newBrandFilter] = true
         currentFilter.manufacturer = newBrandFilter
-        store.dispatch('getWatches', currentFilter)
+        store.dispatch('setManufacturer', newBrandFilter)
+        store.dispatch('getWatches', {})
     }
 }
 
@@ -198,14 +203,26 @@ const setPriceFilter = newPriceFilter => {
         selectedFilter.value = 'All watches'
         priceFilterIsActive.value[newPriceFilter] = false
         currentFilter.sort = ''
-        store.dispatch('getWatches', currentFilter)
+        store.dispatch('setSort', '')
+        store.dispatch('getWatches', {})
     } else {
         selectedFilter.value = priceFilterValues[newPriceFilter]
         priceFilterIsActive.value[newPriceFilter] = true
         currentFilter.sort = newPriceFilter
-        store.dispatch('getWatches', currentFilter)
+        store.dispatch('setSort', newPriceFilter)
+        store.dispatch('getWatches', {})
     }
 }
+
+onMounted(() => {
+    const currentManufacturerFilter = store.getters.getCurrentManufacturerFilter
+    for(let item in brandFilterIsActive.value) {
+        if(item === currentManufacturerFilter) {
+            brandFilterIsActive.value[item] = true
+            selectedFilter.value = currentManufacturerFilter
+        }
+    }
+})
 
 </script>
 

@@ -21,5 +21,9 @@ export default {
 
     getSelectedProductId(state) {
         return state.selectedProductId
+    },
+
+    getCurrentManufacturerFilter(state) {
+        return state.currentFilter.manufacturer
     }
 }

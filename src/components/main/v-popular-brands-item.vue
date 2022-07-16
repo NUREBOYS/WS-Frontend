@@ -27,7 +27,8 @@ const props = defineProps({
 })
 
 const goToBrand = () => {
-    store.dispatch('getWatches', {manufacturer: props.brand.manufacturer})
+    store.dispatch('setManufacturer', props.brand.manufacturer)
+    store.dispatch('getWatches', {})
     router.push('/catalog')
 }
 

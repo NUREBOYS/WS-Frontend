@@ -2,9 +2,10 @@ import axios from 'axios'
 import state from './state'
 
 export default {
+    // eslint-disable-next-line no-unused-vars
     async getOrders({commit}, filter) {
         try {
-            const status = filter || undefined
+            const status = state.currentOrderFilter || undefined
 
             const res = await axios.get('http://localhost:3000/orders', {
                 params: {
@@ -76,4 +77,8 @@ export default {
     setOrderPage({commit}, newPage) {
         commit('SET_ORDER_PAGE', newPage)
     },
+
+    setFilter({commit}, filter) {
+        commit('SET_FILTER', filter)
+    }
 }

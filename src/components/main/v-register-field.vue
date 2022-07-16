@@ -71,6 +71,16 @@ let phoneNumber = ref('')
 let password = ref('')
 let role = props.role ? props.role : 'user'
 
+// const validatePhone = phone => {
+//     const regEx = /^\+380\d{3}\d{2}\d{2}\d{2}$/
+//     return regEx.test(phone)
+// }
+//
+// const validateEmail = email => {
+//     const regEx = /\S+@\S+\.\S+/
+//     return regEx.test(email)
+// }
+
 const register = async () => {
     try {
         const newUser = {

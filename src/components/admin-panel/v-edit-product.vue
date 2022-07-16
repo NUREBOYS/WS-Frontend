@@ -8,7 +8,7 @@
                 <div class="v-edit-product_inputs_find-name">
                     <div class="">
                         <p>Enter product name</p>
-                        <input type="text" @input="search($event.target.value)">
+                        <input type="text" @input="search($event.target.value)" maxlength="50">
                     </div>
                 </div>
             </div>
@@ -83,13 +83,24 @@ const newProduct = ref({
     material: ''
 })
 
+const generatePayload = product => {
+    const productValues = {}
+    for(let item in product) {
+        if(product[item]) {
+            productValues[item] = product[item]
+        }
+    }
+    return productValues
+}
+
+
 const search = searchValue => {
     store.dispatch('getWatches', {search: searchValue})
 }
 
 const saveChanges = () => {
     const selectedProductId = store.getters.getSelectedProductId
-    store.dispatch('editWatch', {selectedProductId, watch: newProduct.value})
+    store.dispatch('editWatch', {selectedProductId, watch: generatePayload(newProduct.value)})
     alert('Product was changed')
     store.dispatch('changeModal', {name: 'edit-product', status: false})
 }

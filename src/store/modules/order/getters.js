@@ -18,4 +18,8 @@ export default {
     getOrderPage(state) {
         return state.orderPage
     },
+
+    getOrderCurrentFilter(state) {
+        return state.currentFilter
+    }
 }

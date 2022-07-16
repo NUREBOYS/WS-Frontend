@@ -6,6 +6,8 @@
                     type="text"
                     placeholder="Search for watches..."
                     @input="search($event.target.value)"
+                    maxlength="50"
+                    :disabled="!isCatalog"
                 />
             </div>
         </div>
@@ -13,13 +15,19 @@
 </template>
 
 <script setup>
+import {computed} from 'vue'
 import {useStore} from 'vuex'
+import {useRouter} from 'vue-router'
 
 const store = useStore()
+const router = useRouter()
+
+let isCatalog = computed(() => router.currentRoute.value.name === 'catalog-page')
 
 const search = searchValue => {
-    store.dispatch('setSearchStatus', true)
-    store.dispatch('getWatches', {search: searchValue})
+    // store.dispatch('setSearchStatus', true)
+    store.dispatch('setSearch', searchValue)
+    store.dispatch('getWatches', {})
 }
 
 </script>

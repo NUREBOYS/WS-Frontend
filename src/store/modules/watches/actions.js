@@ -2,12 +2,13 @@ import axios from 'axios'
 import state from './state'
 
 export default {
-    async getWatches({commit}, filters) {
+    // eslint-disable-next-line no-unused-vars
+    async getWatches({commit}, filter) {
         try {
             const existedFilters = {}
-            for(let filter in filters) {
-                if(filters[filter]) {
-                    existedFilters[filter] = filters[filter]
+            for(let filter in state.currentFilter) {
+                if(state.currentFilter[filter]) {
+                    existedFilters[filter] = state.currentFilter[filter]
                 }
             }
 
@@ -72,5 +73,25 @@ export default {
 
     setSelectedProductId({commit}, newSelectedProductId) {
         commit('SET_SELECTED_PRODUCT_ID', newSelectedProductId)
+    },
+
+    setGender({commit}, gender) {
+        commit('SET_GENDER', gender)
+    },
+
+    setMaterial({commit}, material) {
+        commit('SET_MATERIAL', material)
+    },
+
+    setManufacturer({commit}, manufacturer) {
+        commit('SET_MANUFACTURER', manufacturer)
+    },
+
+    setSort({commit}, sort) {
+        commit('SET_SORT', sort)
+    },
+
+    setSearch({commit}, searchValue) {
+        commit('SET_SEARCH', searchValue)
     }
 }
