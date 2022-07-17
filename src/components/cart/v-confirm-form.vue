@@ -6,11 +6,11 @@
                     <div class="v-confirm-form_wrapper_content_inputs_first-part">
                         <div class="v-confirm-form_wrapper_content_inputs_first-part_first-name input">
                             <p>First name</p>
-                            <input type="text" v-model="firstName">
+                            <input type="text" v-model="newOrder.initiatorData.firstName">
                         </div>
                         <div class="v-confirm-form_wrapper_content_inputs_first-part_second-name input">
                             <p>Second name</p>
-                            <input type="text" v-model="secondName">
+                            <input type="text" v-model="newOrder.initiatorData.secondName">
                         </div>
                         <div class="v-confirm-form_wrapper_content_inputs_first-part_country input">
                             <p>Country</p>
@@ -24,18 +24,18 @@
                     <div class="v-confirm-form_wrapper_content_inputs_second-part">
                         <div class="v-confirm-form_wrapper_content_inputs_second-part_email input">
                             <p>Email</p>
-                            <input type="text" v-model="email">
+                            <input type="text" v-model="newOrder.initiatorData.email">
                         </div>
                         <div class="v-confirm-form_wrapper_content_inputs_second-part_phone-number input">
                             <p>Phone number</p>
-                            <input type="text" v-model="phoneNumber">
+                            <input type="text" v-model="newOrder.initiatorData.phoneNumber">
                         </div>
                         <div class="v-confirm-form_wrapper_content_inputs_second-part_city input">
                             <p>City</p>
                             <input type="text" v-model="newOrder.deliveryDetails.city">
                         </div>
                         <div class="v-confirm-form_wrapper_content_inputs_second-part_fill-button">
-                            <button>Fill from profile</button>
+                            <button @click="fillFromProfile">Fill from profile</button>
                         </div>
                     </div>
                 </div>
@@ -65,6 +65,12 @@ const store = useStore()
 
 const newOrder = ref({
     products: [],
+    initiatorData: {
+        firstName: '',
+        secondName: '',
+        phoneNumber: '',
+        email: ''
+    },
     deliveryDetails: {
         country: '',
         city: '',
@@ -81,15 +87,40 @@ const totalAmount = computed(() => {
     return watches.length
 })
 
+const user = computed(() => store.getters.getUser)
+
+const validatePhone = phone => {
+    const regEx = /^\+380\d{3}\d{2}\d{2}\d{2}$/
+    return regEx.test(phone)
+}
+
+const validateEmail = email => {
+    const regEx = /\S+@\S+\.\S+/
+    return regEx.test(email)
+}
+
+const fillFromProfile = () => {
+    for(let item in newOrder.value.initiatorData) {
+        newOrder.value.initiatorData[item] = user.value[item]
+    }
+}
+
 const sendOrder = () => {
-    store.dispatch('addOrder', newOrder.value)
-    alert('Your order was sent. Wait a 3-5 minutes for a phone call.')
-    store.dispatch('clearCart')
+    if(window.localStorage.getItem('userToken')) {
+        newOrder.value.initiator = user.value._id
+    }
+    console.log(newOrder.value)
+    if(validateEmail(newOrder.value.initiatorData.email) && validatePhone(newOrder.value.initiatorData.phoneNumber)) {
+        store.dispatch('addOrder', newOrder.value)
+        alert('Your order was sent. Wait a 3-5 minutes for a phone call.')
+        store.dispatch('clearCart')
+    }
 }
 
 onMounted(() => {
     const watches = store.getters.getCart
     newOrder.value.products = watches.map(watch => watch._id)
+    store.dispatch('getUser')
 })
 
 </script>

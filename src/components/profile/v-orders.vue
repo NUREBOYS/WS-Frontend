@@ -1,8 +1,8 @@
 <template>
     <div class="v-orders">
         <v-order-item
-            v-for="(order, index) in orders"
-            :key="index"
+            v-for="order in props.orders"
+            :key="order._id"
             :order="order"
         />
     </div>
@@ -11,41 +11,15 @@
 <script setup>
 import VOrderItem from './v-order-item'
 
-const orders = [
-    {
-        orderNumber: 1245,
-        watches: [
-            'Nautilus 5726A',
-            'Aquanaut 5968G',
-            'Grand Complication 5470P'
-        ],
-        date: '13.05.2022',
-        price: 23500,
-        amount: 3,
-        status: 'Pending'
-    },
-    {
-        orderNumber: 1134,
-        watches: [
-            'Nautilus 5726A',
-            'Grand Complication 5470P'
-        ],
-        date: '12.02.2022',
-        price: 27000,
-        amount: 2,
-        status: 'Done'
-    },
-    {
-        orderNumber: 954,
-        watches: [
-            'Grand Complication 5320G'
-        ],
-        date: '15.12.2021',
-        price: 8700,
-        amount: 1,
-        status: 'Declined'
+// eslint-disable-next-line no-undef,no-unused-vars
+const props = defineProps({
+    orders: {
+        type: Array,
+        default() {
+            return []
+        }
     }
-]
+})
 
 </script>
 

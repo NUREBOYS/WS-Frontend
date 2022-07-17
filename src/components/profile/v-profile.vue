@@ -6,13 +6,18 @@
                     <p>Profile</p>
                 </div>
                 <div class="v-profile_wrapper_content_user-info">
-                    <v-user-info />
+                    <v-user-info
+                        :user="user"
+                        :amount="orders"
+                    />
                 </div>
                 <div class="v-profile_wrapper_content_title">
                     <p>Orders</p>
                 </div>
                 <div class="v-profile_wrapper_content_orders">
-                    <v-orders />
+                    <v-orders
+                        :orders="orders"
+                    />
                 </div>
             </div>
         </div>
@@ -20,8 +25,20 @@
 </template>
 
 <script setup>
+import {onMounted, computed} from 'vue'
+import {useStore} from 'vuex'
 import VUserInfo from './v-user-info'
 import VOrders from './v-orders'
+
+const store = useStore()
+
+const user = computed(() => store.getters.getUser)
+const orders = computed(() => store.getters.getOrders)
+
+onMounted(async () => {
+    await store.dispatch('getUser')
+    await store.dispatch('getOrderByUserId', user.value._id)
+})
 
 </script>
 

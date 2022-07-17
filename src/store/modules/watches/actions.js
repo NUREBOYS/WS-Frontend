@@ -1,5 +1,6 @@
 import axios from 'axios'
 import state from './state'
+import userState from '../user/state'
 
 export default {
     // eslint-disable-next-line no-unused-vars
@@ -30,7 +31,11 @@ export default {
     // eslint-disable-next-line no-unused-vars
     async addWatch({commit}, newWatch) {
         try {
-            await axios.post('http://localhost:3000/admin/products', newWatch)
+            await axios.post('http://localhost:3000/admin/products', newWatch, {
+                headers: {
+                    Authorization: 'Bearer ' + userState.userToken
+                }
+            })
         } catch(err) {
             console.log(err)
         }
@@ -39,7 +44,11 @@ export default {
     // eslint-disable-next-line no-unused-vars
     async editWatch({commit}, newWatch) {
         try {
-            await axios.patch(`http://localhost:3000/admin/products/${newWatch.selectedProductId}`, newWatch.watch)
+            await axios.patch(`http://localhost:3000/admin/products/${newWatch.selectedProductId}`, newWatch.watch, {
+                headers: {
+                    Authorization: 'Bearer ' + userState.userToken
+                }
+            })
         } catch(err) {
             console.log(err)
         }
@@ -48,7 +57,11 @@ export default {
     // eslint-disable-next-line no-unused-vars
     async deleteWatch({commit}, selectedProductId) {
         try {
-            await axios.delete(`http://localhost:3000/admin/products/${selectedProductId}`)
+            await axios.delete(`http://localhost:3000/admin/products/${selectedProductId}`, {
+                headers: {
+                    Authorization: 'Bearer ' + userState.userToken
+                }
+            })
         } catch(err) {
             console.log(err)
         }
@@ -57,7 +70,7 @@ export default {
     async getPopularBrands({commit}) {
         try {
             const res = await axios.get('http://localhost:3000/products/popular-manufacturers')
-            commit('SET_POPULAR_BRANDS', res.data.body[0].hot)
+            commit('SET_POPULAR_BRANDS', res.data.body[0].hot.slice(0, 4))
         } catch(err) {
             console.log(err)
         }

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import state from './state'
+import userState from '../user/state'
 
 export default {
     // eslint-disable-next-line no-unused-vars
@@ -12,6 +13,9 @@ export default {
                     page: state.orderPage,
                     perPage: state.ordersPerPage,
                     status
+                },
+                headers: {
+                    Authorization: 'Bearer ' + userState.userToken
                 }
             })
             commit('SET_ORDER_TOTAL_PAGES', Math.ceil(res.data.body.total / state.ordersPerPage))
@@ -23,11 +27,28 @@ export default {
 
     async getOrderById({commit}, orderId) {
         try {
-            const res = await axios.get(`http://localhost:3000/orders/${orderId}`)
+            const res = await axios.get(`http://localhost:3000/orders/${orderId}`, {
+                headers: {
+                    Authorization: 'Bearer ' + userState.userToken
+                }
+            })
             commit('GET_ORDER_BY_ID', res.data.body)
         } catch(err) {
             console.log(err)
         }
+    },
+
+    async getOrderByUserId({commit}, userId) {
+      try {
+          const res = await axios.get(`http://localhost:3000/orders/user/${userId}`, {
+              headers: {
+                  Authorization: 'Bearer ' + userState.userToken
+              }
+          })
+          commit('GET_ORDERS', res.data.body)
+      } catch(err) {
+          console.log(err)
+      }
     },
 
     // eslint-disable-next-line no-unused-vars
@@ -41,7 +62,11 @@ export default {
 
     async approveOrder({commit}, newOrderStatus) {
         try {
-            await axios.post(`http://localhost:3000/orders/approve/${newOrderStatus.orderId}`)
+            await axios.post(`http://localhost:3000/orders/approve/${newOrderStatus.orderId}`, {}, {
+                headers: {
+                    Authorization: 'Bearer ' + userState.userToken
+                }
+            })
             commit('CHANGE_ORDER_STATUS', newOrderStatus)
         } catch(err) {
             console.log(err)
@@ -50,7 +75,11 @@ export default {
 
     async rejectOrder({commit}, newOrderStatus) {
         try {
-            await axios.post(`http://localhost:3000/orders/reject/${newOrderStatus.orderId}`)
+            await axios.post(`http://localhost:3000/orders/reject/${newOrderStatus.orderId}`, {}, {
+                headers: {
+                    Authorization: 'Bearer ' + userState.userToken
+                }
+            })
             commit('CHANGE_ORDER_STATUS', newOrderStatus)
         } catch(err) {
             console.log(err)
@@ -59,7 +88,11 @@ export default {
 
     async deleteOrder({commit}, orderId) {
         try {
-            await axios.delete(`http://localhost:3000/orders/${orderId}`)
+            await axios.delete(`http://localhost:3000/orders/${orderId}`, {
+                headers: {
+                    Authorization: 'Bearer ' + userState.userToken
+                }
+            })
             commit('DELETE_ORDER', orderId)
         } catch(err) {
             console.log(err)

@@ -13,16 +13,17 @@
                     <div class="v-login-field_wrapper_content_inputs_content">
                         <div class="v-login-field_wrapper_content_inputs_content_email">
                             <p>Email</p>
-                            <input type="text" placeholder="ders123@test.com" v-model="email">
+                            <input type="text" placeholder="ders123@test.com" v-model="credentials.email">
                         </div>
                         <div class="v-register-field_wrapper_content_inputs_content_password">
                             <p>Password</p>
-                            <input type="password" placeholder="7ders" v-model="password">
+                            <input type="password" placeholder="7ders" v-model="credentials.password">
                         </div>
                     </div>
                 </div>
                 <div class="v-login-field_wrapper_content_login-submit">
                     <div class="v-login-field_wrapper_content_login-submit_button">
+                        <p @click="showRevokePassword">Forgot Password ?</p>
                         <button @click="login">Login</button>
                     </div>
                 </div>
@@ -37,28 +38,52 @@
                 </div>
             </div>
         </div>
+        <v-revoke-password
+            v-if="isActive.name === 'revoke-password' && isActive.status"
+        />
     </div>
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, computed} from 'vue'
+import {useStore} from 'vuex'
 import {useRouter} from 'vue-router'
+import VRevokePassword from './v-revoke-password'
 
+const store = useStore()
 const router = useRouter()
 
-let email = ref('')
-let password = ref('')
+let isActive = computed(() => store.getters.getModal)
+
+const credentials = ref({
+    email: '',
+    password: ''
+})
+
+const validateEmail = email => {
+    const regEx = /\S+@\S+\.\S+/
+    return regEx.test(email)
+}
+const validatePassword = email => {
+    const regEx = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
+    return regEx.test(email)
+}
 
 const login = async () => {
     try {
-        const newUser = {
-            email: email.value,
-            password: password.value
+        if(validateEmail(credentials.value.email) && validatePassword(credentials.value.password)) {
+            await store.dispatch('login', credentials.value)
+            await router.push('/profile')
+        } else {
+            alert('Wrong email or password')
         }
-        console.log(newUser)
     } catch(err) {
         console.log(err)
     }
+}
+
+const showRevokePassword = () => {
+    store.dispatch('changeModal', {name: 'revoke-password', status: true})
 }
 
 const pushToRegister = () => {
@@ -125,6 +150,15 @@ const pushToRegister = () => {
                 margin: 3.125rem 0 0 0;
                 display: flex;
                 justify-content: center;
+                p {
+                    padding: 0;
+                    margin: 0 0 .5rem 0;
+                    text-align: center;
+                    cursor: pointer;
+                    &:hover {
+                        color: #363062;
+                    }
+                }
                 &_button {
                     button {
                         width: 450px;

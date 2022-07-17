@@ -86,13 +86,16 @@ import {useStore} from 'vuex'
 
 const store = useStore()
 
-let selectedFilter = ref('All watches')
+
+const selectedFilter = ref('All watches')
+
 const currentFilter = {
     gender: '',
     material: '',
     manufacturer: '',
     sort: ''
 }
+
 const genderFilterValues = {
     female: 'Ladies',
     male: 'Men',
@@ -134,12 +137,37 @@ const priceFilterIsActive = ref({
     '-price': false
 })
 
+// const checkFilterStatus = () => {
+//     // const allFilters = {
+//     //     ...genderFilterIsActive.value,
+//     //     ...materialFilterIsActive.value,
+//     //     ...brandFilterIsActive.value,
+//     //     ...priceFilterIsActive.value
+//     // }
+//     const allFiltersValues = {
+//         ...genderFilterValues,
+//         ...materialFilterValues,
+//         ...brandFilterValues,
+//         ...priceFilterValues
+//     }
+//
+//     for(let filter in currentFilter) {
+//         if(currentFilter[filter]) {
+//             selectedFilter.value = allFiltersValues[filter]
+//             console.log(currentFilter[filter])
+//         } else {
+//             selectedFilter.value = 'All watches'
+//         }
+//     }
+// }
+
+
 const setGenderFilter = newGenderFilter => {
-    if(currentFilter.gender !== newGenderFilter && currentFilter.gender) {
+    if (currentFilter.gender !== newGenderFilter && currentFilter.gender) {
         genderFilterIsActive.value[currentFilter.gender] = false
     }
 
-    if(genderFilterIsActive.value[newGenderFilter]) {
+    if (genderFilterIsActive.value[newGenderFilter]) {
         selectedFilter.value = 'All watches'
         genderFilterIsActive.value[newGenderFilter] = false
         currentFilter.gender = ''
@@ -155,11 +183,11 @@ const setGenderFilter = newGenderFilter => {
 }
 
 const setMaterialFilter = newMaterialFilter => {
-    if(currentFilter.material !== newMaterialFilter && currentFilter.material) {
+    if (currentFilter.material !== newMaterialFilter && currentFilter.material) {
         materialFilterIsActive.value[currentFilter.material] = false
     }
 
-    if(materialFilterIsActive.value[newMaterialFilter]) {
+    if (materialFilterIsActive.value[newMaterialFilter]) {
         selectedFilter.value = 'All watches'
         materialFilterIsActive.value[newMaterialFilter] = false
         currentFilter.material = ''
@@ -175,11 +203,11 @@ const setMaterialFilter = newMaterialFilter => {
 }
 
 const setBrandFilter = newBrandFilter => {
-    if(currentFilter.manufacturer !== newBrandFilter && currentFilter.manufacturer) {
+    if (currentFilter.manufacturer !== newBrandFilter && currentFilter.manufacturer) {
         brandFilterIsActive.value[currentFilter.manufacturer] = false
     }
 
-    if(brandFilterIsActive.value[newBrandFilter]) {
+    if (brandFilterIsActive.value[newBrandFilter]) {
         selectedFilter.value = 'All watches'
         brandFilterIsActive.value[newBrandFilter] = false
         currentFilter.manufacturer = ''
@@ -195,11 +223,11 @@ const setBrandFilter = newBrandFilter => {
 }
 
 const setPriceFilter = newPriceFilter => {
-    if(currentFilter.sort !== newPriceFilter && currentFilter.sort) {
+    if (currentFilter.sort !== newPriceFilter && currentFilter.sort) {
         priceFilterIsActive.value[currentFilter.sort] = false
     }
 
-    if(priceFilterIsActive.value[newPriceFilter]) {
+    if (priceFilterIsActive.value[newPriceFilter]) {
         selectedFilter.value = 'All watches'
         priceFilterIsActive.value[newPriceFilter] = false
         currentFilter.sort = ''
@@ -216,8 +244,8 @@ const setPriceFilter = newPriceFilter => {
 
 onMounted(() => {
     const currentManufacturerFilter = store.getters.getCurrentManufacturerFilter
-    for(let item in brandFilterIsActive.value) {
-        if(item === currentManufacturerFilter) {
+    for (let item in brandFilterIsActive.value) {
+        if (item === currentManufacturerFilter) {
             brandFilterIsActive.value[item] = true
             selectedFilter.value = currentManufacturerFilter
         }
@@ -235,6 +263,7 @@ onMounted(() => {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+
         button {
             outline: none;
             border: 1px solid black;
@@ -242,14 +271,17 @@ onMounted(() => {
             background: white;
             font-family: 'Montserrat', sans-serif;
             font-weight: 500;
+
             &:hover {
                 background: #363062;
                 color: white
             }
         }
     }
+
     &_title {
         margin: 2rem 0 0 0;
+
         p {
             font-size: 2rem;
             color: #363062;
