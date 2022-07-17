@@ -12,29 +12,33 @@
                     <div class="v-register-field_wrapper_content_inputs_first-part">
                         <div class="v-register-field_wrapper_content_inputs_first-part_first-name">
                             <p>First name</p>
-                            <input type="text" placeholder="Tolya" v-model="firstName">
+                            <input type="text" placeholder="Tolya" v-model="newUser.firstName">
                         </div>
                         <div class="v-register-field_wrapper_content_inputs_first-part_email">
                             <p>Email</p>
-                            <input type="text" placeholder="ders123@test.com" v-model="email">
+                            <input type="text" placeholder="ders123@test.com" v-model="newUser.email">
                         </div>
                         <div class="v-register-field_wrapper_content_inputs_first-part_gender">
                             <p>Gender</p>
-                            <input type="text" placeholder="Transnigger" v-model="gender">
+                            <select v-model="newUser.gender">
+                                <option>female</option>
+                                <option>male</option>
+                            </select>
+<!--                            <input type="text" placeholder="Transnigger" v-model="gender">-->
                         </div>
                     </div>
                     <div class="v-register-field_wrapper_content_inputs_second-part">
                         <div class="v-register-field_wrapper_content_inputs_second-part_second-name">
                             <p>Second name</p>
-                            <input type="text" placeholder="Molotok" v-model="secondName">
+                            <input type="text" placeholder="Molotok" v-model="newUser.secondName">
                         </div>
                         <div class="v-register-field_wrapper_content_inputs_second-part_phone-number">
                             <p>Phone number</p>
-                            <input type="text" placeholder="+380133712345" v-model="phoneNumber">
+                            <input type="text" placeholder="+380133712345" v-model="newUser.phoneNumber">
                         </div>
                         <div class="v-register-field_wrapper_content_inputs_second-part_password">
                             <p>Password</p>
-                            <input type="password" placeholder="7ders" v-model="password">
+                            <input type="password" placeholder="7ders" v-model="newUser.password">
                         </div>
                     </div>
                 </div>
@@ -50,6 +54,11 @@
 
 <script setup>
 import {ref} from 'vue'
+import {useStore} from 'vuex'
+import {useRouter} from 'vue-router'
+
+const store = useStore()
+const router = useRouter()
 
 // eslint-disable-next-line no-undef,no-unused-vars
 const props = defineProps({
@@ -63,36 +72,52 @@ const props = defineProps({
     }
 })
 
-let firstName = ref('')
-let secondName = ref('')
-let email = ref('')
-let gender = ref('')
-let phoneNumber = ref('')
-let password = ref('')
-let role = props.role ? props.role : 'user'
+const newUser = ref({
+    firstName: '',
+    secondName: '',
+    email: '',
+    gender: '',
+    phoneNumber: '',
+    password: ''
+})
 
-// const validatePhone = phone => {
-//     const regEx = /^\+380\d{3}\d{2}\d{2}\d{2}$/
-//     return regEx.test(phone)
-// }
-//
-// const validateEmail = email => {
-//     const regEx = /\S+@\S+\.\S+/
-//     return regEx.test(email)
-// }
+let role = props.role || 'user'
 
-const register = async () => {
+const validatePhone = phone => {
+    const regEx = /^\+380\d{3}\d{2}\d{2}\d{2}$/
+    return regEx.test(phone)
+}
+
+const validateEmail = email => {
+    const regEx = /\S+@\S+\.\S+/
+    return regEx.test(email)
+}
+const validatePassword = email => {
+    const regEx = /((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
+    return regEx.test(email)
+}
+
+const register = () => {
     try {
-        const newUser = {
-            firstName: firstName.value,
-            secondName: secondName.value,
-            email: email.value,
-            gender: gender.value,
-            phoneNumber: phoneNumber.value,
-            password: password.value,
-            role
+        if(validatePhone(newUser.value.phoneNumber) && validateEmail(newUser.value.email) && validatePassword(newUser.value.password)) {
+            switch(role) {
+                case 'user':
+                    store.dispatch('registerUser', newUser.value)
+                    router.push('/login')
+                    break
+                case 'admin':
+                    store.dispatch('registerAdmin', newUser.value)
+                    alert('Adin was added')
+                    for(let item in newUser.value) {
+                        newUser.value[item] = ''
+                    }
+                    break
+                default:
+                    break
+            }
+        } else {
+            alert('Wrong phone number or email or password')
         }
-        console.log(newUser)
     } catch(err) {
         console.log(err)
     }

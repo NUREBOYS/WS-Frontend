@@ -17,21 +17,21 @@
         </div>
         <div class="v-admin-orders-item_date">
             <p class="orders-item-text">Order date: {{props.order.createdAt}}</p>
-            <p class="orders-item-text" style="margin: 1rem 0 0 0;">First name: {{props.order.name}}</p>
+            <p class="orders-item-text" style="margin: 1rem 0 0 0;">First name: {{props.order.initiatorData.firstName}}</p>
             <p class="orders-item-text">Country: {{props.order.deliveryDetails.country}}</p>
             <p class="orders-item-text">City: {{props.order.deliveryDetails.city}}</p>
             <p class="orders-item-text">Street: {{props.order.deliveryDetails.street}}</p>
         </div>
         <div class="v-admin-orders-item_phone-price">
             <p class="orders-item-text">Total price: {{props.order.totalPrice}}$</p>
-            <p class="orders-item-text" style="margin: 1rem 0 0 0;">Second name: {{props.order.surname}}</p>
+            <p class="orders-item-text" style="margin: 1rem 0 0 0;">Second name: {{props.order.initiatorData.secondName}}</p>
             <p class="orders-item-text">Gender: {{props.order.gender}}</p>
         </div>
         <div class="v-admin-orders-item_amount-status">
             <div class="v-admin-orders-item_amount-status_amount">
                 <p class="orders-item-text">Total amount: {{props.order.items.length}}</p>
-                <p class="orders-item-text" style="margin: 1rem 0 0 0;">Phone number: {{props.order.phoneNumber}}</p>
-                <p class="orders-item-text">Email: {{props.order.email}}</p>
+                <p class="orders-item-text" style="margin: 1rem 0 0 0;">Phone number: {{props.order.initiatorData.phoneNumber}}</p>
+                <p class="orders-item-text">Email: {{props.order.initiatorData.email}}</p>
             </div>
             <div class="v-admin-orders-item_amount-status_status">
                 <p class="orders-item-text" style="margin: 1rem 0 0 0;">

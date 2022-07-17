@@ -35,7 +35,8 @@ const store = useStore()
 const watches = computed(() => store.getters.getWatches)
 
 const search = searchValue => {
-    store.dispatch('getWatches', {search: searchValue})
+    store.dispatch('setSearch', searchValue)
+    store.dispatch('getWatches', {})
 }
 
 const deleteProduct = () => {

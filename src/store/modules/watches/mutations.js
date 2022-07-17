@@ -36,7 +36,7 @@ export default {
     },
 
     SET_SORT(state, sort) {
-        state.currentFilter.gender = sort
+        state.currentFilter.sort = sort
     },
 
     SET_SEARCH(state, searchValue) {

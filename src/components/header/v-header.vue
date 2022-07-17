@@ -22,11 +22,22 @@
                         <div class="v-header_wrapper_content_after-search_button cart">
                             <router-link to="/cart" class="v-header_wrapper_content_after-search_button_link">Cart</router-link>
                         </div>
-                        <div class="v-header_wrapper_content_after-search_button register">
-                            <router-link to="/register" class="v-header_wrapper_content_after-search_button_link">Register</router-link>
+                        <div
+                            class="v-header_wrapper_content_after-search_button login"
+                            v-if="token"
+                        >
+                            <p class="v-header_wrapper_content_after-search_button_link" @click="logout">Log out</p>
                         </div>
-                        <div class="v-header_wrapper_content_after-search_button login">
-                            <router-link to="/login" class="v-header_wrapper_content_after-search_button_link">Log in</router-link>
+                        <div
+                            class="reg_login"
+                            v-else
+                        >
+                            <div class="v-header_wrapper_content_after-search_button register">
+                                <router-link to="/register" class="v-header_wrapper_content_after-search_button_link">Register</router-link>
+                            </div>
+                            <div class="v-header_wrapper_content_after-search_button login">
+                                <router-link to="/login" class="v-header_wrapper_content_after-search_button_link">Log in</router-link>
+                            </div>
                         </div>
                     </v-nav-buttons>
                 </div>
@@ -36,9 +47,33 @@
 </template>
 
 <script setup>
+import {computed, onMounted} from 'vue'
+import {useStore} from 'vuex'
+import {useRouter} from 'vue-router'
 import VNavButtons from '../main/v-nav-buttons'
 import VLogo from './v-logo'
 import VSearch from './v-search'
+
+const store = useStore()
+const router = useRouter()
+
+const token = computed(() => store.getters.getUserToken)
+
+const logout = () => {
+    store.dispatch('logout')
+    window.localStorage.removeItem('userToken')
+    if(window.localStorage.getItem('isAdmin')) {
+        window.localStorage.removeItem('isAdmin')
+    }
+    router.push('/login')
+}
+
+onMounted(() => {
+    if(store.getters.getUserToken) {
+        token.value = store.getters.getUserToken
+    }
+
+})
 
 </script>
 
@@ -90,6 +125,9 @@ import VSearch from './v-search'
             }
             &_after-search {
                 display: flex;
+                .reg_login {
+                    display: flex;
+                }
                 &_button {
                     &_link {
                         text-decoration: none;
@@ -112,6 +150,11 @@ import VSearch from './v-search'
                 }
                 .login {
                     margin: 0 0 0 35px;
+                    p {
+                        margin: 0;
+                        padding: 0;
+                        cursor: pointer;
+                    }
                     &:hover {
                         opacity: .6;
                     }
