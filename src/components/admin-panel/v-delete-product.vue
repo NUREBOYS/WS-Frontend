@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import {computed} from 'vue'
+import {computed, onMounted} from 'vue'
 import {useStore} from 'vuex'
 import VAdminModal from '../main/v-admin-modal'
 import VSearchedProducts from './v-searched-products'
@@ -45,6 +45,10 @@ const deleteProduct = () => {
     alert('Product was deleted')
     store.dispatch('changeModal', {name: 'delete-product', status: false})
 }
+
+onMounted(() => {
+  store.dispatch('getWatches', {})
+})
 
 </script>
 

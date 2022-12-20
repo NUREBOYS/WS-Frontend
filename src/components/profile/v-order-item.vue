@@ -2,13 +2,13 @@
     <div class="v-orders-item">
         <div class="v-orders-item_number-product-list">
             <div class="v-orders-item_number-product-list_number">
-                <p class="orders-item-text">Order number: {{props.order._id}}</p>
+                <p class="orders-item-text">Order number: {{props.order.orderId}}</p>
             </div>
             <div class="v-orders-item_number-product-list_product-list">
                 <p class="orders-item-text">Products name:</p>
                 <p
                     class="orders-item-text"
-                    v-for="(watch, index) in props.order.items"
+                    v-for="(watch, index) in props.order.watches"
                     :key="index"
                 >
                     - {{watch.manufacturer}} - {{watch.name}}
@@ -23,7 +23,7 @@
         </div>
         <div class="v-orders-item_amount-status">
             <div class="v-orders-item_amount-status_amount">
-                <p class="orders-item-text">Total amount: {{props.order.items.length}}</p>
+                <p class="orders-item-text">Total amount: {{props.order.watches.length}}</p>
             </div>
             <div class="v-orders-item_amount-status_status">
                 <p class="orders-item-text">Order status: <v-order-status :status="props.order.status"/></p>

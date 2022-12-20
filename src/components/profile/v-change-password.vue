@@ -2,7 +2,7 @@
     <div class="v-change-password">
         <v-admin-modal>
             <div class="v-change-password_title">
-                <p>Edit phone number</p>
+                <p>Edit password</p>
             </div>
             <div class="v-change-password_name-price">
                 <div class="qwe">

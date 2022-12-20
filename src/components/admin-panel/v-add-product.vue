@@ -22,7 +22,7 @@
                 <div class="">
                     <p>Gender</p>
                     <select v-model="product.gender">
-                        <option>na</option>
+                        <option>unisex</option>
                         <option>female</option>
                         <option>male</option>
                     </select>
@@ -41,7 +41,13 @@
             <div class="v-add-product_inputs_photo">
                 <div class="">
                     <p>Photo URL</p>
-                    <input type="text" v-model="product.imageUrl">
+                    <input type="text" v-model="product.image">
+                </div>
+            </div>
+            <div class="v-add-product_inputs_photo">
+                <div class="">
+                    <p>Amount</p>
+                    <input type="text" v-model.number="product.amount">
                 </div>
             </div>
             <div class="v-add-product_inputs_add-button">
@@ -62,9 +68,10 @@ const product = ref({
     name: '',
     manufacturer: '',
     price: 0,
-    imageUrl: '',
+    image: '',
     gender: '',
-    material: ''
+    material: '',
+    amount: 0,
 })
 
 const addNewProduct = () => {

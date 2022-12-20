@@ -2,17 +2,17 @@
     <div class="v-user-info">
         <div class="v-user-info_name-surname">
             <div class="v-user-info_name-surname_name">
-                <p class="user-info-text">First name: {{props.user.firstName}}</p>
+                <p class="user-info-text">First name: {{props.user.name}}</p>
             </div>
             <div class="v-user-info_name-surname_surname">
-                <p class="user-info-text">Second name: {{props.user.secondName}}</p>
+                <p class="user-info-text">Second name: {{props.user.surname}}</p>
             </div>
         </div>
         <div class="v-user-info_email">
             <p class="user-info-text">Email: {{props.user.email}}</p>
         </div>
         <div class="v-user-info_phone-number">
-            <p class="user-info-text">Phone number: {{props.user.phoneNumber}}</p>
+            <p class="user-info-text">Phone number: {{props.user.phone}}</p>
         </div>
         <div class="v-user-info_gender-orders">
             <div class="v-user-info_gender-orders_gender">

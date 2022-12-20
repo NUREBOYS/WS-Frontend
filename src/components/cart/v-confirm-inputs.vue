@@ -3,14 +3,14 @@
         <div class="v-confirm-inputs_wrapper">
             <div class="v-confirm-inputs_wrapper_content">
                 <div class="v-confirm-inputs_wrapper_content_first-part">
-                    <div class="v-confirm-inputs_wrapper_content_first-part_first-name input">
-                        <p>First name</p>
-                        <input type="text" v-model="firstName">
-                    </div>
-                    <div class="v-confirm-inputs_wrapper_content_first-part_second-name input">
-                        <p>Second name</p>
-                        <input type="text" v-model="secondName">
-                    </div>
+<!--                    <div class="v-confirm-inputs_wrapper_content_first-part_first-name input">-->
+<!--                        <p>First name</p>-->
+<!--                        <input type="text" v-model="firstName">-->
+<!--                    </div>-->
+<!--                    <div class="v-confirm-inputs_wrapper_content_first-part_second-name input">-->
+<!--                        <p>Second name</p>-->
+<!--                        <input type="text" v-model="secondName">-->
+<!--                    </div>-->
                     <div class="v-confirm-inputs_wrapper_content_first-part_country input">
                         <p>Country</p>
                         <input type="text" v-model="country">

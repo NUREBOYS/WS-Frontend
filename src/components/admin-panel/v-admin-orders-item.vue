@@ -2,13 +2,13 @@
     <div class="v-admin-orders-item">
         <div class="v-admin-orders-item_number-product-list">
             <div class="v-admin-orders-item_number-product-list_number">
-                <p class="orders-item-text">Order number: {{props.order.orderNumber}}</p>
+                <p class="orders-item-text">Order number: {{props.order.orderId}}</p>
             </div>
             <div class="v-admin-orders-item_number-product-list_product-list">
                 <p class="orders-item-text">Products name:</p>
                 <p
                     class="orders-item-text"
-                    v-for="(watch, index) in props.order.items"
+                    v-for="(watch, index) in props.order.watches"
                     :key="index"
                 >
                     - {{watch.manufacturer}} - {{watch.name}}
@@ -17,21 +17,21 @@
         </div>
         <div class="v-admin-orders-item_date">
             <p class="orders-item-text">Order date: {{props.order.createdAt}}</p>
-            <p class="orders-item-text" style="margin: 1rem 0 0 0;">First name: {{props.order.initiatorData.firstName}}</p>
-            <p class="orders-item-text">Country: {{props.order.deliveryDetails.country}}</p>
-            <p class="orders-item-text">City: {{props.order.deliveryDetails.city}}</p>
-            <p class="orders-item-text">Street: {{props.order.deliveryDetails.street}}</p>
+            <p class="orders-item-text" style="margin: 1rem 0 0 0;">First name: {{props.order.user.name}}</p>
+            <p class="orders-item-text">Country: {{props.order.delivery.country}}</p>
+            <p class="orders-item-text">City: {{props.order.delivery.city}}</p>
+            <p class="orders-item-text">Street: {{props.order.delivery.street}}</p>
         </div>
         <div class="v-admin-orders-item_phone-price">
             <p class="orders-item-text">Total price: {{props.order.totalPrice}}$</p>
-            <p class="orders-item-text" style="margin: 1rem 0 0 0;">Second name: {{props.order.initiatorData.secondName}}</p>
-            <p class="orders-item-text">Gender: {{props.order.gender}}</p>
+            <p class="orders-item-text" style="margin: 1rem 0 0 0;">Second name: {{props.order.user.surname}}</p>
+            <p class="orders-item-text">Gender: {{props.order.user.gender}}</p>
         </div>
         <div class="v-admin-orders-item_amount-status">
             <div class="v-admin-orders-item_amount-status_amount">
-                <p class="orders-item-text">Total amount: {{props.order.items.length}}</p>
-                <p class="orders-item-text" style="margin: 1rem 0 0 0;">Phone number: {{props.order.initiatorData.phoneNumber}}</p>
-                <p class="orders-item-text">Email: {{props.order.initiatorData.email}}</p>
+                <p class="orders-item-text">Total amount: {{props.order.watches.length}}</p>
+                <p class="orders-item-text" style="margin: 1rem 0 0 0;">Phone number: {{props.order.user.phone}}</p>
+                <p class="orders-item-text">Email: {{props.order.user.email}}</p>
             </div>
             <div class="v-admin-orders-item_amount-status_status">
                 <p class="orders-item-text" style="margin: 1rem 0 0 0;">
@@ -64,8 +64,8 @@ const props = defineProps({
 
 const showChangeStatus = () => {
     store.dispatch('changeModal', {name: 'change-order-status', status: true})
-    store.dispatch('setOrderId', props.order._id)
-    store.dispatch('getOrderById', props.order._id)
+    store.dispatch('setOrderId', props.order.orderId)
+    // store.dispatch('getOrderById', props.order._id)
 }
 
 const deleteOrder = () => {

@@ -12,7 +12,7 @@
                     <div class="v-register-field_wrapper_content_inputs_first-part">
                         <div class="v-register-field_wrapper_content_inputs_first-part_first-name">
                             <p>First name</p>
-                            <input type="text" placeholder="Tolya" v-model="newUser.firstName">
+                            <input type="text" placeholder="Tolya" v-model="newUser.name">
                         </div>
                         <div class="v-register-field_wrapper_content_inputs_first-part_email">
                             <p>Email</p>
@@ -30,15 +30,15 @@
                     <div class="v-register-field_wrapper_content_inputs_second-part">
                         <div class="v-register-field_wrapper_content_inputs_second-part_second-name">
                             <p>Second name</p>
-                            <input type="text" placeholder="Molotok" v-model="newUser.secondName">
+                            <input type="text" placeholder="Molotok" v-model="newUser.surname">
                         </div>
                         <div class="v-register-field_wrapper_content_inputs_second-part_phone-number">
                             <p>Phone number</p>
-                            <input type="text" placeholder="+380133712345" v-model="newUser.phoneNumber">
+                            <input type="text" placeholder="+380133712345" v-model="newUser.phone">
                         </div>
                         <div class="v-register-field_wrapper_content_inputs_second-part_password">
                             <p>Password</p>
-                            <input type="password" placeholder="7ders" v-model="newUser.password">
+                            <input type="password" placeholder="7_Ders123" v-model="newUser.password">
                         </div>
                     </div>
                 </div>
@@ -73,12 +73,12 @@ const props = defineProps({
 })
 
 const newUser = ref({
-    firstName: '',
-    secondName: '',
     email: '',
-    gender: '',
-    phoneNumber: '',
-    password: ''
+    password: '',
+    name: '',
+    surname: '',
+    phone: '',
+    gender: ''
 })
 
 let role = props.role || 'user'
@@ -99,7 +99,7 @@ const validatePassword = email => {
 
 const register = () => {
     try {
-        if(validatePhone(newUser.value.phoneNumber) && validateEmail(newUser.value.email) && validatePassword(newUser.value.password)) {
+        if(validatePhone(newUser.value.phone) && validateEmail(newUser.value.email) && validatePassword(newUser.value.password)) {
             switch(role) {
                 case 'user':
                     store.dispatch('registerUser', newUser.value)
