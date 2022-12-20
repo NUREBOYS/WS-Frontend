@@ -5,7 +5,7 @@ export default {
     // eslint-disable-next-line no-unused-vars
     async registerUser({commit}, newUser) {
         try {
-            await axios.post('http://localhost:3000/users/register', newUser)
+            await axios.post('http://localhost:7000/auth/sign-up', newUser)
         } catch(err) {
             console.log(err)
         }
@@ -26,13 +26,9 @@ export default {
 
     async login({commit}, credentials) {
         try {
-            const res = await axios.post('http://localhost:3000/users/login', credentials)
-            commit('SET_USER_TOKEN', res.data.body.token)
-            window.localStorage.setItem('userToken', res.data.body.token)
-            if(res.data.body.user.role === 'admin') {
-                commit('SET_IS_ADMIN', true)
-                window.localStorage.setItem('isAdmin', 'true')
-            }
+            const res = await axios.post('http://localhost:7000/auth/sign-in', credentials)
+            commit('SET_USER_TOKEN', res.data.token)
+            window.localStorage.setItem('userToken', res.data.token)
         } catch(err) {
             console.log(err)
         }
@@ -41,12 +37,16 @@ export default {
     // eslint-disable-next-line no-unused-vars
     async getUser({commit}) {
         try {
-            const res = await axios.get('http://localhost:3000/users', {
+            const res = await axios.get('http://localhost:7000/user', {
                 headers: {
-                    Authorization: 'Bearer ' + state.userToken
+                    Authorization: `Bearer ${state.userToken}`
                 }
             })
-            commit('SET_USER', res.data.body)
+            commit('SET_USER', res.data)
+            if(res.data.role === 'admin') {
+                commit('SET_IS_ADMIN', true)
+                window.localStorage.setItem('isAdmin', 'true')
+            }
         } catch(err) {
             console.log(err)
         }

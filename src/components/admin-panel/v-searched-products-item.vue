@@ -33,7 +33,7 @@ const props = defineProps({
 const emit = defineEmits(['selectProduct'])
 
 const setSelectedId = () => {
-    store.dispatch('setSelectedProductId', props.watch._id)
+    store.dispatch('setSelectedProductId', props.watch.id)
 }
 
 const selectProduct = () => {

@@ -4,39 +4,39 @@
             <div class="v-confirm-form_wrapper_content">
                 <div class="v-confirm-form_wrapper_content_inputs">
                     <div class="v-confirm-form_wrapper_content_inputs_first-part">
-                        <div class="v-confirm-form_wrapper_content_inputs_first-part_first-name input">
-                            <p>First name</p>
-                            <input type="text" v-model="newOrder.initiatorData.firstName">
-                        </div>
-                        <div class="v-confirm-form_wrapper_content_inputs_first-part_second-name input">
-                            <p>Second name</p>
-                            <input type="text" v-model="newOrder.initiatorData.secondName">
-                        </div>
+<!--                        <div class="v-confirm-form_wrapper_content_inputs_first-part_first-name input">-->
+<!--                            <p>First name</p>-->
+<!--                            <input type="text" v-model="newOrder.initiatorData.firstName">-->
+<!--                        </div>-->
+<!--                        <div class="v-confirm-form_wrapper_content_inputs_first-part_second-name input">-->
+<!--                            <p>Second name</p>-->
+<!--                            <input type="text" v-model="newOrder.initiatorData.secondName">-->
+<!--                        </div>-->
                         <div class="v-confirm-form_wrapper_content_inputs_first-part_country input">
                             <p>Country</p>
-                            <input type="text" v-model="newOrder.deliveryDetails.country">
+                            <input type="text" v-model="newOrder.delivery.country">
                         </div>
                         <div class="v-confirm-form_wrapper_content_inputs_first-part_street input">
                             <p>Street</p>
-                            <input type="text" v-model="newOrder.deliveryDetails.street">
+                            <input type="text" v-model="newOrder.delivery.street">
                         </div>
                     </div>
                     <div class="v-confirm-form_wrapper_content_inputs_second-part">
-                        <div class="v-confirm-form_wrapper_content_inputs_second-part_email input">
-                            <p>Email</p>
-                            <input type="text" v-model="newOrder.initiatorData.email">
-                        </div>
-                        <div class="v-confirm-form_wrapper_content_inputs_second-part_phone-number input">
-                            <p>Phone number</p>
-                            <input type="text" v-model="newOrder.initiatorData.phoneNumber">
-                        </div>
+<!--                        <div class="v-confirm-form_wrapper_content_inputs_second-part_email input">-->
+<!--                            <p>Email</p>-->
+<!--                            <input type="text" v-model="newOrder.initiatorData.email">-->
+<!--                        </div>-->
+<!--                        <div class="v-confirm-form_wrapper_content_inputs_second-part_phone-number input">-->
+<!--                            <p>Phone number</p>-->
+<!--                            <input type="text" v-model="newOrder.initiatorData.phoneNumber">-->
+<!--                        </div>-->
                         <div class="v-confirm-form_wrapper_content_inputs_second-part_city input">
                             <p>City</p>
-                            <input type="text" v-model="newOrder.deliveryDetails.city">
+                            <input type="text" v-model="newOrder.delivery.city">
                         </div>
-                        <div class="v-confirm-form_wrapper_content_inputs_second-part_fill-button">
-                            <button @click="fillFromProfile">Fill from profile</button>
-                        </div>
+<!--                        <div class="v-confirm-form_wrapper_content_inputs_second-part_fill-button">-->
+<!--                            <button @click="fillFromProfile">Fill from profile</button>-->
+<!--                        </div>-->
                     </div>
                 </div>
                 <div class="v-confirm-form_wrapper_content_details">
@@ -64,18 +64,14 @@ import {useStore} from 'vuex'
 const store = useStore()
 
 const newOrder = ref({
-    products: [],
-    initiatorData: {
-        firstName: '',
-        secondName: '',
-        phoneNumber: '',
-        email: ''
+    userId: null,
+    delivery: {
+      country: '',
+      city: '',
+      street: ''
     },
-    deliveryDetails: {
-        country: '',
-        city: '',
-        street: ''
-    }
+    totalPrice: null,
+    watches: []
 })
 
 const totalPrice = computed(() => {
@@ -89,37 +85,39 @@ const totalAmount = computed(() => {
 
 const user = computed(() => store.getters.getUser)
 
-const validatePhone = phone => {
-    const regEx = /^\+380\d{3}\d{2}\d{2}\d{2}$/
-    return regEx.test(phone)
-}
+// const validatePhone = phone => {
+//     const regEx = /^\+380\d{3}\d{2}\d{2}\d{2}$/
+//     return regEx.test(phone)
+// }
+//
+// const validateEmail = email => {
+//     const regEx = /\S+@\S+\.\S+/
+//     return regEx.test(email)
+// }
 
-const validateEmail = email => {
-    const regEx = /\S+@\S+\.\S+/
-    return regEx.test(email)
-}
-
-const fillFromProfile = () => {
-    for(let item in newOrder.value.initiatorData) {
-        newOrder.value.initiatorData[item] = user.value[item]
-    }
-}
+// const fillFromProfile = () => {
+//     for(let item in newOrder.value.initiatorData) {
+//         newOrder.value.initiatorData[item] = user.value[item]
+//     }
+// }
 
 const sendOrder = () => {
     if(window.localStorage.getItem('userToken')) {
-        newOrder.value.initiator = user.value._id
+        newOrder.value.userId = user.value.id
     }
+
+    newOrder.value.totalPrice = totalPrice.value
+
     console.log(newOrder.value)
-    if(validateEmail(newOrder.value.initiatorData.email) && validatePhone(newOrder.value.initiatorData.phoneNumber)) {
-        store.dispatch('addOrder', newOrder.value)
-        alert('Your order was sent. Wait a 3-5 minutes for a phone call.')
-        store.dispatch('clearCart')
-    }
+
+    store.dispatch('addOrder', newOrder.value)
+    alert('Your order was sent. Wait a 3-5 minutes for a phone call.')
+    store.dispatch('clearCart')
 }
 
 onMounted(() => {
     const watches = store.getters.getCart
-    newOrder.value.products = watches.map(watch => watch._id)
+    newOrder.value.watches = watches.map(cartItem => cartItem.id)
     store.dispatch('getUser')
 })
 

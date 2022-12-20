@@ -9,7 +9,7 @@ export default {
 
     CHANGE_ORDER_STATUS(state, newOrderStatus) {
       state.orders.forEach(order => {
-          if(order._id === newOrderStatus.orderId) {
+          if(order.orderId === newOrderStatus.orderId) {
               order.status = newOrderStatus.status
           }
       })

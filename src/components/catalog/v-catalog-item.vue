@@ -19,7 +19,8 @@
                         <p>{{props.watch.price}}$</p>
                     </div>
                     <div class="v-catalog-item_wrapper_content_details_buy-button">
-                        <button @click="addToCart" :disabled="isAddedToCart">{{ isAddedToCart ? 'Already in cart': 'Add to cart' }}</button>
+                        <button @click="addToCart" :disabled="isAddedToCart" v-if="token">{{ isAddedToCart ? 'Already in cart': 'Add to cart' }}</button>
+                        <p v-else>Please authorize</p>
                     </div>
                 </div>
             </div>
@@ -32,6 +33,7 @@ import {ref, onMounted} from 'vue'
 import {useStore} from 'vuex'
 
 let isAddedToCart = ref(false)
+const token = ref('')
 
 const store = useStore()
 
@@ -51,9 +53,10 @@ const addToCart = () => {
 }
 
 onMounted(() => {
+    token.value = store.getters.getUserToken
     const watchesInCart = store.getters.getCart
     watchesInCart.forEach(watch => {
-        if(props.watch._id === watch._id) {
+        if(props.watch.id === watch.id) {
             isAddedToCart.value = true
         }
     })

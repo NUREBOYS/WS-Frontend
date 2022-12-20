@@ -12,13 +12,13 @@
                     <p v-if="orders.length === 0">Order list is empty =^_^=</p>
                     <v-admin-orders-item
                         v-for="order in orders"
-                        :key="order._id"
+                        :key="order.orderId"
                         :order="order"
                     />
                 </div>
-                <v-order-pagination
-                    :totalPages="totalPages"
-                />
+<!--                <v-order-pagination-->
+<!--                    :totalPages="totalPages"-->
+<!--                />-->
             </div>
         </div>
         <v-change-order-status
@@ -33,13 +33,13 @@ import {useStore} from 'vuex'
 import VFilterOrders from './v-filter-orders'
 import VAdminOrdersItem from './v-admin-orders-item'
 import VChangeOrderStatus from './v-change-order-status'
-import VOrderPagination from '../main/v-order-pagination'
+// import VOrderPagination from '../main/v-order-pagination'
 
 const store = useStore()
 
 const orders = computed(() => store.getters.getOrders)
 let isActive = computed(() => store.getters.getModal)
-let totalPages = computed(() => store.getters.getOrderTotalPages)
+// let totalPages = computed(() => store.getters.getOrderTotalPages)
 
 onMounted(() => {
     store.dispatch('getOrders')

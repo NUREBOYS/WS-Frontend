@@ -7,7 +7,7 @@
     </p>
     <p
         class="v-order-status done"
-        v-else-if="props.status === 'approved'"
+        v-else-if="props.status === 'accepted'"
     >
         {{props.status}}
     </p>

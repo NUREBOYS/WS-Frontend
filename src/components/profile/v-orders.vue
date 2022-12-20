@@ -2,7 +2,7 @@
     <div class="v-orders">
         <v-order-item
             v-for="order in props.orders"
-            :key="order._id"
+            :key="order.orderId"
             :order="order"
         />
     </div>

@@ -28,7 +28,7 @@ const approve = () => {
         store.dispatch('changeModal', {name: 'change-order-status', status: false})
         return
     }
-    store.dispatch('approveOrder', { orderId: orderId.value, status: 'approved'})
+    store.dispatch('approveOrder', { orderId: orderId.value, status: 'accepted'})
     store.dispatch('clearOrderId')
     store.dispatch('changeModal', {name: 'change-order-status', status: false})
 }

@@ -54,7 +54,7 @@
             <div class="v-edit-product_inputs_photo">
                 <div class="">
                     <p>Photo URL</p>
-                    <input type="text" v-model="newProduct.imageUrl">
+                    <input type="text" v-model="newProduct.image">
                 </div>
             </div>
             <div class="v-edit-product_inputs_edit-button">
@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-import {ref, computed} from 'vue'
+import {ref, computed, onMounted} from 'vue'
 import {useStore} from 'vuex'
 import VAdminModal from '../main/v-admin-modal'
 import VSearchedProducts from './v-searched-products'
@@ -78,7 +78,7 @@ const newProduct = ref({
     name: '',
     manufacturer: '',
     price: 0,
-    imageUrl: '',
+    image: '',
     gender: '',
     material: ''
 })
@@ -105,6 +105,10 @@ const saveChanges = () => {
     alert('Product was changed')
     store.dispatch('changeModal', {name: 'edit-product', status: false})
 }
+
+onMounted(() => {
+    store.dispatch('getWatches', {})
+})
 
 </script>
 

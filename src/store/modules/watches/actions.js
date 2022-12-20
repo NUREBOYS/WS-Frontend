@@ -1,28 +1,13 @@
 import axios from 'axios'
-import state from './state'
+// import state from './state'
 import userState from '../user/state'
 
 export default {
     // eslint-disable-next-line no-unused-vars
-    async getWatches({commit}, filter) {
+    async getWatches({commit}) {
         try {
-            const existedFilters = {}
-            for(let filter in state.currentFilter) {
-                if(state.currentFilter[filter]) {
-                    existedFilters[filter] = state.currentFilter[filter]
-                }
-            }
-
-            const res = await axios.get('http://localhost:3000/products', {
-                params: {
-                    page: state.page,
-                    perPage: state.perPage,
-                    ...existedFilters
-                }
-            })
-
-            commit('SET_TOTAL_PAGES', Math.ceil(res.data.body.total / state.perPage))
-            commit('GET_WATCHES', res.data.body.items)
+            const res = await axios.get('http://localhost:7000/product')
+            commit('GET_WATCHES', res.data)
         } catch(err) {
             console.log(err)
         }
@@ -30,10 +15,11 @@ export default {
 
     // eslint-disable-next-line no-unused-vars
     async addWatch({commit}, newWatch) {
+        console.log(newWatch)
         try {
-            await axios.post('http://localhost:3000/admin/products', newWatch, {
+            await axios.post('http://localhost:7000/admin-product', newWatch, {
                 headers: {
-                    Authorization: 'Bearer ' + userState.userToken
+                    Authorization: `Bearer ${userState.userToken}`
                 }
             })
         } catch(err) {
@@ -44,9 +30,9 @@ export default {
     // eslint-disable-next-line no-unused-vars
     async editWatch({commit}, newWatch) {
         try {
-            await axios.patch(`http://localhost:3000/admin/products/${newWatch.selectedProductId}`, newWatch.watch, {
+            await axios.patch(`http://localhost:7000/admin-product/${newWatch.selectedProductId}`, newWatch.watch, {
                 headers: {
-                    Authorization: 'Bearer ' + userState.userToken
+                    Authorization: `Bearer ${userState.userToken}`
                 }
             })
         } catch(err) {
@@ -57,9 +43,9 @@ export default {
     // eslint-disable-next-line no-unused-vars
     async deleteWatch({commit}, selectedProductId) {
         try {
-            await axios.delete(`http://localhost:3000/admin/products/${selectedProductId}`, {
+            await axios.delete(`http://localhost:7000/admin-product/${selectedProductId}`, {
                 headers: {
-                    Authorization: 'Bearer ' + userState.userToken
+                    Authorization: `Bearer ${userState.userToken}`
                 }
             })
         } catch(err) {

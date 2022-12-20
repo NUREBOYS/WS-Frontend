@@ -37,7 +37,7 @@ const orders = computed(() => store.getters.getOrders)
 
 onMounted(async () => {
     await store.dispatch('getUser')
-    await store.dispatch('getOrderByUserId', user.value._id)
+    await store.dispatch('getOrderByUserId')
 })
 
 </script>
